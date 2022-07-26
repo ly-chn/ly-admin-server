@@ -1,0 +1,14 @@
+spring:
+  datasource:
+    druid:
+      url: jdbc:mysql:///ly_admin
+      username: root
+      password: 123456
+server:
+  # 如果配置了反向代理, 需要使用此项(or framework)来处理 server url, 反向代理需要配置x-forwarded-header
+  forward-headers-strategy: native
+# Sa-Token配置
+sa-token:
+  token-name: token
+  is-share: false
+  token-style: uuid
