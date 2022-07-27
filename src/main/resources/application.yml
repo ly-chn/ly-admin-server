@@ -12,3 +12,6 @@ sa-token:
   token-name: token
   is-share: false
   token-style: uuid
+app:
+  file:
+    upload-path: E:/xyf/tmp
