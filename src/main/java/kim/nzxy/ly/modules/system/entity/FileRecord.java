@@ -4,14 +4,13 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import kim.nzxy.ly.common.entity.BaseSimpleEntity;
 import kim.nzxy.ly.modules.system.enums.FilePositionEnum;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
+import lombok.experimental.SuperBuilder;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 /**
  * 文件
@@ -20,16 +19,12 @@ import java.util.Date;
  * @since 2022/7/27 16:51
  */
 @Data
+@EqualsAndHashCode(callSuper = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value = "sys_file_record")
-@Accessors(chain = true)
-public class FileRecord {
-    /**
-     * id
-     */
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
+@SuperBuilder
+public class FileRecord extends BaseSimpleEntity {
 
     /**
      * hash
@@ -42,6 +37,18 @@ public class FileRecord {
      */
     @TableField(value = "block")
     private Boolean block;
+
+    /**
+     * 业务id
+     */
+    @TableField(value = "biz_id")
+    private Long bizId;
+
+    /**
+     * 业务路径, [业务表名.业务字段]
+     */
+    @TableField(value = "biz_path")
+    private String bizPath;
 
     /**
      * 原始文件名
@@ -77,7 +84,7 @@ public class FileRecord {
      * 创建时间
      */
     @TableField(value = "create_time")
-    private Date createTime;
+    private LocalDateTime createTime;
 
     /**
      * 删除状态

@@ -1,5 +1,8 @@
 package kim.nzxy.ly.modules.system.controller;
 
+import kim.nzxy.ly.common.annotation.SaSkip;
+import kim.nzxy.ly.common.res.Res;
+import kim.nzxy.ly.modules.system.entity.FileRecord;
 import kim.nzxy.ly.modules.system.service.FileRecordService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,11 +21,12 @@ import org.springframework.web.multipart.MultipartFile;
 @RequestMapping("file-record")
 @RequiredArgsConstructor
 @Slf4j
+@SaSkip
 public class FileRecordController {
     private final FileRecordService service;
 
     @PostMapping
-    public void upload(MultipartFile file, Boolean block) {
-        service.upload(file, block);
+    public Res<FileRecord> upload(MultipartFile file, Boolean block) {
+        return Res.success(service.upload(file, block));
     }
 }

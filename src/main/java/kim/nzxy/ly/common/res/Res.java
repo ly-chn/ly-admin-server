@@ -42,6 +42,7 @@ public class Res<T> {
         msg.setData(data);
         return msg;
     }
+
     /**
      * 成功响应并返回信息
      *
@@ -51,6 +52,7 @@ public class Res<T> {
     public static <T> Res<T> success(T data) {
         return Res.success(data, SUCCESS_MESSAGE);
     }
+
     /**
      * 成功响应并返回信息
      *
@@ -59,6 +61,7 @@ public class Res<T> {
     public static <T> Res<T> success(String message) {
         return Res.success(null, message);
     }
+
     /**
      * 成功响应并返回信息
      *
@@ -67,6 +70,7 @@ public class Res<T> {
     public static <T> Res<T> success() {
         return Res.success(null, SUCCESS_MESSAGE);
     }
+
     /**
      * 操作失败的提示
      *
@@ -80,6 +84,7 @@ public class Res<T> {
         msg.setMessage(message);
         return msg;
     }
+
     /**
      * 操作失败的提示
      *

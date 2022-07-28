@@ -1,0 +1,16 @@
+### 文件上传
+POST {{host}}/file-record
+Content-Type: multipart/form-data;boundary=ly_chn_boundary
+
+
+--ly_chn_boundary
+Content-Disposition: form-data; name="block"
+Content-Type: text/plain
+
+false
+--ly_chn_boundary
+Content-Disposition: form-data; name="file"; filename="tmp.txt"
+
+> ./tmp/tmp.txt
+
+###

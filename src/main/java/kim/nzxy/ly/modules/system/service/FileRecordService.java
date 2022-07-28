@@ -11,7 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 public interface FileRecordService extends IService<FileRecord> {
 
 
-    void upload(MultipartFile file, Boolean block);
+    FileRecord upload(MultipartFile file, Boolean block);
 }
+
 
 

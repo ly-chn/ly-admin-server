@@ -22,6 +22,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'cn.dev33:sa-token-spring-boot-starter:1.30.0'
+    implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
     // implementation 'com.github.xiaoymin:knife4j-spring-boot-starter:3.0.3'
     implementation 'de.mkammerer:argon2-jvm:2.11'
     implementation 'com.baomidou:mybatis-plus-boot-starter:3.5.2'

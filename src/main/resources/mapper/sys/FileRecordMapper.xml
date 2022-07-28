@@ -7,6 +7,8 @@
     <id column="id" property="id" />
     <result column="hash" property="hash" />
     <result column="block" property="block" />
+    <result column="biz_id" property="bizId" />
+    <result column="biz_path" property="bizPath" />
     <result column="filename" property="filename" />
     <result column="ext" property="ext" />
     <result column="position" property="position" />
@@ -17,6 +19,7 @@
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, hash, block, filename, ext, `position`, `locator`, create_by, create_time, deleted
+    id, hash, block, biz_id, biz_path, filename, ext, `position`, `locator`, create_by, create_time,
+    deleted
   </sql>
 </mapper>

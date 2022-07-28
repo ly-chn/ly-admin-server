@@ -2,9 +2,12 @@ package kim.nzxy.ly.common.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableLogic;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
+import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
 
@@ -15,18 +18,11 @@ import java.time.LocalDateTime;
  * @since 2022/7/26 14:28
  */
 @FieldNameConstants
-public abstract class BaseNormalEntity extends BaseIdEntity{
-    /**
-     * 创建时间
-     */
-    @TableField(fill = FieldFill.INSERT)
-    private LocalDateTime createTime;
-
-    /**
-     * 创建人id
-     */
-    @TableField(fill = FieldFill.INSERT)
-    private String createBy;
+@Getter
+@Setter
+@EqualsAndHashCode(callSuper = true)
+@SuperBuilder
+public abstract class BaseFullEntity extends BaseSimpleEntity {
 
     /**
      * 更新时间
@@ -39,12 +35,4 @@ public abstract class BaseNormalEntity extends BaseIdEntity{
      */
     @TableField(fill = FieldFill.INSERT_UPDATE)
     private String updateBy;
-
-    /**
-     * 为true表示已删除
-     */
-    @TableField()
-    @TableLogic
-    @JsonIgnore
-    private Boolean deleted;
 }

@@ -5,7 +5,7 @@ import kim.nzxy.ly.modules.system.entity.FileRecord;
 
 /**
  * @author xuyf
- * @since 2022/7/27 16:51
+ * @since 2022/7/28 15:46
  */
 public interface FileRecordMapper extends BaseMapper<FileRecord> {
 }

@@ -4,7 +4,8 @@ import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
-import kim.nzxy.ly.common.entity.BaseNormalEntity;
+import kim.nzxy.ly.common.entity.BaseFullEntity;
+import kim.nzxy.ly.common.entity.BaseSimpleEntity;
 import kim.nzxy.ly.common.util.TokenUtil;
 import org.apache.ibatis.reflection.MetaObject;
 import org.mybatis.spring.annotation.MapperScan;
@@ -25,16 +26,16 @@ import java.time.LocalDateTime;
 public class MybatisPlusConfig implements MetaObjectHandler {
     @Override
     public void insertFill(MetaObject metaObject) {
-        this.strictInsertFill(metaObject, BaseNormalEntity.Fields.createBy, TokenUtil::getLoginId, Long.class);
-        this.strictInsertFill(metaObject, BaseNormalEntity.Fields.createTime, LocalDateTime::now, LocalDateTime.class);
-        this.strictInsertFill(metaObject, BaseNormalEntity.Fields.updateBy, TokenUtil::getLoginId, Long.class);
-        this.strictUpdateFill(metaObject, BaseNormalEntity.Fields.updateTime, LocalDateTime::now, LocalDateTime.class);
+        this.strictInsertFill(metaObject, BaseSimpleEntity.Fields.createBy, TokenUtil::getLoginId, Long.class);
+        this.strictInsertFill(metaObject, BaseSimpleEntity.Fields.createTime, LocalDateTime::now, LocalDateTime.class);
+        this.strictInsertFill(metaObject, BaseFullEntity.Fields.updateBy, TokenUtil::getLoginId, Long.class);
+        this.strictUpdateFill(metaObject, BaseFullEntity.Fields.updateTime, LocalDateTime::now, LocalDateTime.class);
     }
 
     @Override
     public void updateFill(MetaObject metaObject) {
-        this.strictUpdateFill(metaObject, BaseNormalEntity.Fields.updateBy, TokenUtil::getLoginId, Long.class);
-        this.strictUpdateFill(metaObject, BaseNormalEntity.Fields.updateTime, LocalDateTime::now, LocalDateTime.class);
+        this.strictUpdateFill(metaObject, BaseFullEntity.Fields.updateBy, TokenUtil::getLoginId, Long.class);
+        this.strictUpdateFill(metaObject, BaseFullEntity.Fields.updateTime, LocalDateTime::now, LocalDateTime.class);
     }
 
     /**

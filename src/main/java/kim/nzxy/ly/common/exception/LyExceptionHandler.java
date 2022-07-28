@@ -4,6 +4,7 @@ import cn.dev33.satoken.exception.NotLoginException;
 import kim.nzxy.ly.common.res.Res;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.redis.connection.PoolException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -27,6 +28,15 @@ public class LyExceptionHandler {
     public Res<?> handleCyException(LyException e) {
         log.error(e.getMessage(), e);
         return Res.fail(e.getMessage());
+    }
+
+    /**
+     * 自定义异常
+     */
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    public Res<?> handleCyException(HttpRequestMethodNotSupportedException e) {
+        log.error(e.getMessage(), e);
+        return Res.fail("请求方式不支持");
     }
 
     /**
