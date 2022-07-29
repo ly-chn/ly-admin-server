@@ -16,5 +16,5 @@ public enum FilePositionEnum implements BaseEnum {
     /**
      * 本地存储
      */
-    local;
+    local
 }

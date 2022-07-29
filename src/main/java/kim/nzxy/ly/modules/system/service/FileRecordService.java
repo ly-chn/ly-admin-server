@@ -11,6 +11,13 @@ import org.springframework.web.multipart.MultipartFile;
 public interface FileRecordService extends IService<FileRecord> {
 
 
+    /**
+     * 上传文件
+     *
+     * @param file  文件
+     * @param block 是否锁定, 锁定后需要授权才能读取文件
+     * @return 文件记录
+     */
     FileRecord upload(MultipartFile file, Boolean block);
 }
 
