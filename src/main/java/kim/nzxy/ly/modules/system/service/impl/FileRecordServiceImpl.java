@@ -49,8 +49,7 @@ public class FileRecordServiceImpl extends ServiceImpl<FileRecordMapper, FileRec
                         .filename(filename)
                         .ext(ext)
                         .position(existedRecord.getPosition())
-                        .bizId(existedRecord.getBizId())
-                        .bizPath(existedRecord.getBizPath())
+                        .locator(existedRecord.getLocator())
                         .build();
                 this.save(fileRecord);
                 return fileRecord;
