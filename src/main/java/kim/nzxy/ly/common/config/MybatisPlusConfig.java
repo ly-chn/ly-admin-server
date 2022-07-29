@@ -10,7 +10,7 @@ import kim.nzxy.ly.common.util.TokenUtil;
 import org.apache.ibatis.reflection.MetaObject;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 
@@ -21,7 +21,7 @@ import java.time.LocalDateTime;
  * @see <a href="https://baomidou.com/">官方文档</a>
  * @since 2022/7/26 14:33
  */
-@Configuration
+@Component
 @MapperScan("kim.nzxy.ly.**.mapper")
 public class MybatisPlusConfig implements MetaObjectHandler {
     @Override

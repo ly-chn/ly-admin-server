@@ -1,16 +1,14 @@
 package kim.nzxy.ly.modules.system.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import kim.nzxy.ly.common.entity.BaseSimpleEntity;
 import kim.nzxy.ly.modules.system.enums.FilePositionEnum;
-import lombok.*;
-import lombok.experimental.Accessors;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-
-import java.time.LocalDateTime;
 
 /**
  * 文件
@@ -73,22 +71,4 @@ public class FileRecord extends BaseSimpleEntity {
      */
     @TableField(value = "`locator`")
     private String locator;
-
-    /**
-     * 创建人id
-     */
-    @TableField(value = "create_by")
-    private Long createBy;
-
-    /**
-     * 创建时间
-     */
-    @TableField(value = "create_time")
-    private LocalDateTime createTime;
-
-    /**
-     * 删除状态
-     */
-    @TableField(value = "deleted")
-    private Boolean deleted;
 }
