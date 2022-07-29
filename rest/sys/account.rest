@@ -1,0 +1,9 @@
+### 用户登录
+POST {{host}}/account/login
+Content-Type: application/json
+
+{
+  "authType": "username",
+  "symbol": "{{username}}",
+  "credential": "{{password}}"
+}

@@ -8,9 +8,10 @@
         <result column="nickname" property="nickname"/>
         <result column="avatar" property="avatar"/>
         <result column="deleted" property="deleted"/>
+        <result column="block_to" property="blockTo"/>
     </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated-->
-        id, nickname, avatar, deleted
+        id, nickname, avatar, deleted, block_to
     </sql>
 </mapper>

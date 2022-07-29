@@ -29,6 +29,11 @@ public class Res<T> {
     private T data;
 
     /**
+     * 系统时间戳
+     */
+    private long timestamp = System.currentTimeMillis();
+
+    /**
      * 成功响应并返回信息
      *
      * @param message 提示信息

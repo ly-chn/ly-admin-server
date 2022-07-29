@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="kim.nzxy.ly.modules.system.mapper.AccountMapper">
+    <select id="findUserAuth" resultType="kim.nzxy.ly.modules.system.bo.UserLoginBO">
+        select credential, user_id, block_to
+        from sys_user_auth sua
+                 left join sys_user su on sua.user_id = su.id
+        where auth_type = #{authType}
+          and symbol = #{symbol}
+        limit 1
+    </select>
+</mapper>

@@ -29,7 +29,7 @@ public class LyException extends RuntimeException {
     }
 
     /**
-     * 寻常的异常, 如业务中常见的用户错误操作
+     * 寻常的异常, 如业务中常见的用户错误操作, 用户应该变更操作方式才能解决问题
      */
     public static class Normal extends LyException {
         public Normal(String message, Throwable cause) {
@@ -42,7 +42,7 @@ public class LyException extends RuntimeException {
     }
 
     /**
-     * 严重的异常, 如连接中断等
+     * 严重的异常, 如连接中断等, 用户无法解决的问题, 需要联系网站维护者/开发人员, 一般由系统自动捕获
      */
     public static class Panic extends LyException {
         public Panic(String message, Throwable cause) {
@@ -55,7 +55,7 @@ public class LyException extends RuntimeException {
     }
 
     /**
-     * 微小的异常, 如参数校验等
+     * 微小的异常, 如参数校验等, 用户可以解决的问题, 一般由用户自己处理
      */
     public static class Minor extends LyException {
         public Minor(String message, Throwable cause) {

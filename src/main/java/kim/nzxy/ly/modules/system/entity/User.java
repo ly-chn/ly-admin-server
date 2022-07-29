@@ -4,9 +4,12 @@ import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+
+import java.time.LocalDateTime;
 
 /**
  * 用户
@@ -42,4 +45,10 @@ public class User {
      */
     @TableField(value = "deleted")
     private Boolean deleted;
+
+    /**
+     * 用户解封时间
+     */
+    @TableField(value = "block_to")
+    private LocalDateTime blockTo;
 }
