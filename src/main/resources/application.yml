@@ -21,16 +21,24 @@ springdoc:
   api-docs:
     path: /doc
 logging:
-  # IDEA某版本会提示过期, 原因是替换为logging.file.name.忽略即可
   file:
     name: ./logs/ly-admin.log
-  pattern:
-    console: '%d{HH:mm:ss.SSS} [%thread] %X{userId} %highlight(%-5level) %cyan(%logger{20}:%L) - %msg%n'
-    file: '%d{HH:mm:ss.SSS} [%thread] %X{userId} %-5level %cyan(%logger{20}:%L) - %msg%n'
+  # todo: 注入用户id
   logback:
     rollingpolicy:
       max-history: 30
-      max-file-size: 100MB
+      max-file-size: 10MB
+  pattern:
+    console: >-
+      %clr(%d{${LOG_DATEFORMAT_PATTERN:HH:mm:ss.SSS}}){faint}
+      %clr(${LOG_LEVEL_PATTERN:%5p})
+      %clr(${PID:- }){magenta}
+      %clr(---){faint}
+      %clr(%X{userId}){red}
+      %clr([%15.15t]){faint}
+      %clr(%-40.40logger{39}){cyan}
+      %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}
+
 #mybatis plus 设置
 mybatis-plus:
   global-config:

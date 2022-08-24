@@ -36,6 +36,7 @@ public class SaTokenConfig implements WebMvcConfigurer {
                         if (handler instanceof HandlerMethod) {
                             Method method = ((HandlerMethod) handler).getMethod();
                             // 忽略权限验证, 方法或者类上添加此注解, 则不需要权限验证
+                            MDC.put("userId", "1234");
                             if (method.isAnnotationPresent(SaSkip.class) || method.getDeclaringClass().isAnnotationPresent(SaSkip.class)) {
                                 return true;
                             }
