@@ -25,7 +25,7 @@ public class LyExceptionHandler {
      * 自定义异常
      */
     @ExceptionHandler(LyException.class)
-    public Res<?> handleCyException(LyException e) {
+    public Res<?> handler(LyException e) {
         log.error(e.getMessage(), e);
         return Res.fail(e.getMessage());
     }
@@ -34,7 +34,7 @@ public class LyExceptionHandler {
      * 自定义异常
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public Res<?> handleCyException(HttpRequestMethodNotSupportedException e) {
+    public Res<?> handler(HttpRequestMethodNotSupportedException e) {
         log.error(e.getMessage(), e);
         return Res.fail("请求方式不支持");
     }
@@ -43,7 +43,7 @@ public class LyExceptionHandler {
      * 计算异常, 如将long转为int时, 超出int范围
      */
     @ExceptionHandler(ArithmeticException.class)
-    public Res<?> handlerArithmeticException(ArithmeticException e) {
+    public Res<?> handler(ArithmeticException e) {
         log.error(e.getMessage(), e);
         return Res.fail("运算异常");
     }
@@ -52,7 +52,7 @@ public class LyExceptionHandler {
      * 空指针
      */
     @ExceptionHandler(NullPointerException.class)
-    public Res<?> handleNullPointerException(NullPointerException e) {
+    public Res<?> handler(NullPointerException e) {
         log.error(e.getMessage(), e);
         return Res.fail("服务器发生了错误");
     }
@@ -61,7 +61,7 @@ public class LyExceptionHandler {
      * 参数校验
      */
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public Res<?> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+    public Res<?> handler(MethodArgumentNotValidException e) {
         log.error(e.getMessage(), e);
         String s;
         try {
@@ -73,32 +73,31 @@ public class LyExceptionHandler {
     }
 
     @ExceptionHandler(SQLException.class)
-    public Res<?> handleSqlException(SQLException e) {
+    public Res<?> handler(SQLException e) {
         log.error(e.getMessage(), e);
         return Res.fail("数据库异常");
     }
 
     @ExceptionHandler(Exception.class)
-    public Res<?> handleException(Exception e) {
+    public Res<?> handler(Exception e) {
         log.error(e.getMessage(), e);
         return Res.fail("操作失败");
     }
 
     @ExceptionHandler(MaxUploadSizeExceededException.class)
-    public Res<?> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException e) {
+    public Res<?> handler(MaxUploadSizeExceededException e) {
         log.error(e.getMessage(), e);
         return Res.fail("文件大小超出限制, 请压缩或降低文件质量! ");
     }
 
     @ExceptionHandler(PoolException.class)
-    public Res<?> handlePoolException(PoolException e) {
+    public Res<?> handler(PoolException e) {
         log.error(e.getMessage(), e);
         return Res.fail("Redis 无法连接!");
     }
 
     @ExceptionHandler(NotLoginException.class)
-    public Res<?> handlerNotLoginException(NotLoginException e) {
-        e.printStackTrace();
+    public Res<?> handler(NotLoginException e) {
         log.error("token校验失败: {}", e.getType());
         // 判断场景值，定制化异常信息
         String message = switch (e.getType()) {

@@ -39,6 +39,7 @@ public class FileRecordServiceImpl extends ServiceImpl<FileRecordMapper, FileRec
             String md5 = SecureUtil.md5(file.getInputStream());
             Optional<FileRecord> existedRecordOpt = this.lambdaQuery()
                     .eq(FileRecord::getHash, md5)
+                    .last("limit 1")
                     .oneOpt();
             if (existedRecordOpt.isPresent()) {
                 log.info("文件[{}]已存在，不需要上传", filename);

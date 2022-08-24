@@ -14,10 +14,16 @@ import org.springframework.stereotype.Component;
 @Component
 @Data
 public class AppProperties {
+    /**
+     * 文件相关配置
+     */
     private FileConfig file;
 
     @Data
     public static class FileConfig {
+        /**
+         * 本地文件上传时, 上传的路径
+         */
         private String uploadPath;
     }
 }

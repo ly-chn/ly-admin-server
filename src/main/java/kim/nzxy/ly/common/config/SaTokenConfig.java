@@ -4,6 +4,7 @@ import cn.dev33.satoken.stp.StpUtil;
 import cn.dev33.satoken.strategy.SaStrategy;
 import kim.nzxy.ly.common.annotation.SaSkip;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -39,6 +40,7 @@ public class SaTokenConfig implements WebMvcConfigurer {
                                 return true;
                             }
                             StpUtil.checkLogin();
+                            MDC.put("userId", StpUtil.getLoginIdAsString());
                             SaStrategy.me.checkMethodAnnotation.accept(method);
                         }
                         return true;
