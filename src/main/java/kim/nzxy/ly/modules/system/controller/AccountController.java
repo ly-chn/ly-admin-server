@@ -7,6 +7,7 @@ import kim.nzxy.ly.common.util.TokenUtil;
 import kim.nzxy.ly.modules.system.service.AccountService;
 import kim.nzxy.ly.modules.system.vo.UserLoginVO;
 import lombok.RequiredArgsConstructor;
+import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("account")
 @RequiredArgsConstructor
 @SaSkip
+@Order
 public class AccountController {
     private final AccountService service;
 

@@ -15,7 +15,6 @@ sa-token:
 app:
   file:
     upload-path: E:/xyf/tmp
-
 # spring doc
 springdoc:
   api-docs:
