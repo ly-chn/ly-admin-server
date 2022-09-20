@@ -19,13 +19,10 @@ public class LyException extends RuntimeException {
      */
     private final Throwable cause;
 
-    private final LyExceptionLevelEnum level;
-
-    private LyException(String message, Throwable cause, LyExceptionLevelEnum level) {
+    private LyException(String message, Throwable cause) {
         super(message, cause);
         this.message = message;
         this.cause = cause;
-        this.level = level;
     }
 
     /**
@@ -33,7 +30,7 @@ public class LyException extends RuntimeException {
      */
     public static class Normal extends LyException {
         public Normal(String message, Throwable cause) {
-            super(message, cause, LyExceptionLevelEnum.NORMAL);
+            super(message, cause);
         }
 
         public Normal(String message) {
@@ -46,7 +43,7 @@ public class LyException extends RuntimeException {
      */
     public static class Panic extends LyException {
         public Panic(String message, Throwable cause) {
-            super(message, cause, LyExceptionLevelEnum.PANIC);
+            super(message, cause);
         }
 
         public Panic(String message) {
@@ -59,7 +56,7 @@ public class LyException extends RuntimeException {
      */
     public static class Minor extends LyException {
         public Minor(String message, Throwable cause) {
-            super(message, cause, LyExceptionLevelEnum.MINOR);
+            super(message, cause);
         }
 
         public Minor(String message) {
