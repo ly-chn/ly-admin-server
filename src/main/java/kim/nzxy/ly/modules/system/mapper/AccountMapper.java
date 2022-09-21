@@ -1,7 +1,7 @@
 package kim.nzxy.ly.modules.system.mapper;
 
 import kim.nzxy.ly.modules.system.bo.UserLoginBO;
-import kim.nzxy.ly.modules.system.vo.UserLoginVO;
+import kim.nzxy.ly.modules.system.dto.UserLoginDTO;
 
 import java.util.Optional;
 
@@ -18,5 +18,5 @@ public interface AccountMapper {
      * @param loginInfo 用户登录信息
      * @return 用户已授权信息
      */
-    Optional<UserLoginBO> findUserAuth(UserLoginVO loginInfo);
+    Optional<UserLoginBO> findUserAuth(UserLoginDTO loginInfo);
 }

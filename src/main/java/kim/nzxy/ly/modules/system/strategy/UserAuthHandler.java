@@ -2,7 +2,7 @@ package kim.nzxy.ly.modules.system.strategy;
 
 import kim.nzxy.ly.common.exception.LyException;
 import kim.nzxy.ly.modules.system.bo.UserLoginBO;
-import kim.nzxy.ly.modules.system.vo.UserLoginVO;
+import kim.nzxy.ly.modules.system.dto.UserLoginDTO;
 import org.springframework.beans.factory.InitializingBean;
 
 /**
@@ -15,10 +15,10 @@ public interface UserAuthHandler extends InitializingBean {
     /**
      * 用户登录
      *
-     * @param userLoginVO 用户前端数据
+     * @param userLoginDTO 用户前端数据
      * @param loginUser   待登录的用户信息(来自数据库)
      */
-    default void verify(UserLoginVO userLoginVO, UserLoginBO loginUser){
+    default void verify(UserLoginDTO userLoginDTO, UserLoginBO loginUser){
         throw new LyException.Normal("登录方式未实现");
     }
 }

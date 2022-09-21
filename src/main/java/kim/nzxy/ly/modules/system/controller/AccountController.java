@@ -5,7 +5,7 @@ import kim.nzxy.ly.common.annotation.SaSkip;
 import kim.nzxy.ly.common.res.Res;
 import kim.nzxy.ly.common.util.TokenUtil;
 import kim.nzxy.ly.modules.system.service.AccountService;
-import kim.nzxy.ly.modules.system.vo.UserLoginVO;
+import kim.nzxy.ly.modules.system.dto.UserLoginDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.*;
@@ -30,7 +30,7 @@ public class AccountController {
     }
 
     @PostMapping("login")
-    public Res<SaTokenInfo> login(@RequestBody UserLoginVO loginInfo) {
+    public Res<SaTokenInfo> login(@RequestBody UserLoginDTO loginInfo) {
         return Res.success(service.login(loginInfo));
     }
     @DeleteMapping("logout")

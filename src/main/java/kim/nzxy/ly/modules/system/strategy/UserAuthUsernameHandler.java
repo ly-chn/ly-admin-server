@@ -4,7 +4,7 @@ import kim.nzxy.ly.common.exception.LyException;
 import kim.nzxy.ly.common.util.Argon2Util;
 import kim.nzxy.ly.modules.system.bo.UserLoginBO;
 import kim.nzxy.ly.modules.system.enums.UserAuthTypeEnum;
-import kim.nzxy.ly.modules.system.vo.UserLoginVO;
+import kim.nzxy.ly.modules.system.dto.UserLoginDTO;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
@@ -17,15 +17,15 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserAuthUsernameHandler implements UserAuthHandler {
     @Override
-    public void verify(UserLoginVO userLoginVO, UserLoginBO loginUser) {
-        if (StringUtils.isEmpty(userLoginVO.getCredential()) ||
-                !Argon2Util.verify(userLoginVO.getCredential(), loginUser.getCredential())) {
+    public void verify(UserLoginDTO userLoginDTO, UserLoginBO loginUser) {
+        if (StringUtils.isEmpty(userLoginDTO.getCredential()) ||
+                !Argon2Util.verify(userLoginDTO.getCredential(), loginUser.getCredential())) {
             throw new LyException.Minor("密码错误");
         }
     }
 
     @Override
-    public void afterPropertiesSet() throws Exception {
+    public void afterPropertiesSet() {
         UserAuthStrategyFactory.register(UserAuthTypeEnum.username, this);
     }
 }

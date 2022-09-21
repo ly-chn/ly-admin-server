@@ -6,10 +6,8 @@ import kim.nzxy.ly.common.util.TokenUtil;
 import kim.nzxy.ly.modules.system.bo.UserLoginBO;
 import kim.nzxy.ly.modules.system.mapper.AccountMapper;
 import kim.nzxy.ly.modules.system.service.AccountService;
-import kim.nzxy.ly.modules.system.service.UserAuthService;
-import kim.nzxy.ly.modules.system.service.UserService;
 import kim.nzxy.ly.modules.system.strategy.UserAuthStrategyFactory;
-import kim.nzxy.ly.modules.system.vo.UserLoginVO;
+import kim.nzxy.ly.modules.system.dto.UserLoginDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +28,7 @@ public class AccountServiceImpl implements AccountService {
     }
 
     @Override
-    public SaTokenInfo login(UserLoginVO loginInfo) {
+    public SaTokenInfo login(UserLoginDTO loginInfo) {
         Optional<UserLoginBO> loginBO = mapper.findUserAuth(loginInfo);
         loginBO.orElseThrow(() -> new LyException.Minor("用户信息不存在"));
         UserLoginBO loginUser = loginBO.get();

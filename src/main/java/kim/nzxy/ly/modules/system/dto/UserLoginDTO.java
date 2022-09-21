@@ -1,9 +1,7 @@
-package kim.nzxy.ly.modules.system.vo;
+package kim.nzxy.ly.modules.system.dto;
 
 import kim.nzxy.ly.modules.system.enums.UserAuthTypeEnum;
 import lombok.Data;
-
-import java.time.LocalDateTime;
 
 /**
  * 用户登录
@@ -12,7 +10,7 @@ import java.time.LocalDateTime;
  * @since 2022/7/29 10:07
  */
 @Data
-public class UserLoginVO {
+public class UserLoginDTO {
     /**
      * 授权类型
      */
