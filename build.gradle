@@ -21,20 +21,18 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    implementation 'cn.dev33:sa-token-spring-boot-starter:1.30.0'
+    implementation 'cn.dev33:sa-token-spring-boot-starter:1.33.0'
     implementation 'org.springdoc:springdoc-openapi-ui:1.6.9'
-    implementation 'cn.dev33:sa-token-dao-redis-jackson:1.30.0'
-
-    // implementation 'com.github.xiaoymin:knife4j-spring-boot-starter:3.0.3'
+    implementation 'cn.dev33:sa-token-dao-redis-jackson:1.33.0'
+    implementation 'com.github.xiaoymin:knife4j-openapi3-spring-boot-starter:4.0.0'
     implementation 'de.mkammerer:argon2-jvm:2.11'
-    implementation 'com.baomidou:mybatis-plus-boot-starter:3.5.2'
-    implementation 'cn.hutool:hutool-all:5.8.4'
-    implementation 'com.alibaba:druid-spring-boot-starter:1.2.11'
+    implementation 'com.baomidou:mybatis-plus-boot-starter:3.5.3.1'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'commons-io:commons-io:2.11.0'
 }
 
 tasks.named('test') {

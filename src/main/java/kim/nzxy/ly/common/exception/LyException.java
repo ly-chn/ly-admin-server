@@ -26,7 +26,7 @@ public class LyException extends RuntimeException {
     }
 
     /**
-     * 寻常的异常, 如业务中常见的用户错误操作, 用户应该变更操作方式才能解决问题
+     * 寻常的异常, 用户无法解决(操作方式不合理, 账号封禁, 删除不存在的东西)的问题, 但无需开发人员介入
      */
     public static class Normal extends LyException {
         public Normal(String message, Throwable cause) {

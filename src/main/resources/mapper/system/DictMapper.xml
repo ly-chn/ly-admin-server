@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kim.nzxy.ly.modules.system.mapper.DictMapper">
+  <resultMap id="BaseResultMap" type="kim.nzxy.ly.modules.system.entity.Dict">
+    <!--@mbg.generated-->
+    <!--@Table sys_dict-->
+    <id column="id" property="id" />
+    <result column="dict_name" property="dictName" />
+    <result column="dict_code" property="dictCode" />
+    <result column="dict_type" property="dictType" />
+    <result column="remark" property="remark" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, dict_name, dict_code, dict_type, remark
+  </sql>
+</mapper>
