@@ -23,11 +23,8 @@ public class SaTokenConfig implements WebMvcConfigurer {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new SaInterceptor(handler -> {
-                    MDC.put("userId", StpUtil.getLoginIdAsString());
-                }))
-                .addPathPatterns("/**")
-                .excludePathPatterns("/swagger-ui.html")
-                .excludePathPatterns("/doc/**");
+        registry.addInterceptor(new SaInterceptor(handler -> MDC.put("userId", StpUtil.getLoginIdAsString())))
+                .excludePathPatterns("/**")
+                .excludePathPatterns("/doc.html", "/webjars/**", "/v3/api-docs/swagger-config");
     }
 }

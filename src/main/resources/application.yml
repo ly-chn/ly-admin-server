@@ -14,14 +14,10 @@ sa-token:
 app:
   file:
     upload-path: E:/xyf/tmp
-# spring doc
-springdoc:
-  api-docs:
-    path: /doc
+
 logging:
   file:
     name: ./logs/ly-admin.log
-  # todo: 注入用户id
   logback:
     rollingpolicy:
       max-history: 30
