@@ -40,7 +40,7 @@ public class Res<T> {
      * @param data    返回的data数据
      * @return 统一封装返回单条成功数据
      */
-    public static <T> Res<T> success(T data, String message) {
+    public static <T> Res<T> ok(T data, String message) {
         Res<T> msg = new Res<T>();
         msg.setCode(2000);
         msg.setMessage(message);
@@ -54,8 +54,8 @@ public class Res<T> {
      * @param data 返回的data数据
      * @return 统一封装返回单条成功数据
      */
-    public static <T> Res<T> success(T data) {
-        return Res.success(data, SUCCESS_MESSAGE);
+    public static <T> Res<T> ok(T data) {
+        return Res.ok(data, SUCCESS_MESSAGE);
     }
 
     /**
@@ -63,8 +63,9 @@ public class Res<T> {
      *
      * @return 统一封装返回单条成功数据
      */
-    public static <T> Res<T> success(String message) {
-        return Res.success(null, message);
+    public static <T> Res<T> ok(String message) {
+        // noinspection unchecked
+        return Res.ok((T) message, message);
     }
 
     /**
@@ -72,8 +73,8 @@ public class Res<T> {
      *
      * @return 统一封装返回单条成功数据
      */
-    public static <T> Res<T> success() {
-        return Res.success(null, SUCCESS_MESSAGE);
+    public static <T> Res<T> ok() {
+        return Res.ok(null, SUCCESS_MESSAGE);
     }
 
     /**
