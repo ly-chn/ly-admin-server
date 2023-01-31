@@ -3,8 +3,8 @@ package kim.nzxy.ly.modules.system.strategy;
 import kim.nzxy.ly.common.exception.LyException;
 import kim.nzxy.ly.common.util.Argon2Util;
 import kim.nzxy.ly.modules.system.bo.UserLoginBO;
-import kim.nzxy.ly.modules.system.enums.UserAuthTypeEnum;
 import kim.nzxy.ly.modules.system.dto.UserLoginDTO;
+import kim.nzxy.ly.modules.system.enums.UserAuthTypeEnum;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 

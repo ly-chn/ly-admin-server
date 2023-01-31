@@ -1,5 +1,7 @@
 package kim.nzxy.ly.common.res;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import kim.nzxy.ly.modules.system.entity.Dict;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -99,5 +101,15 @@ public class Res<T> {
      */
     public static <T> Res<T> fail(String message) {
         return Res.fail(message, 5000);
+    }
+
+    public static <T> Res<PagingVO<T>> page(Page<T> page) {
+        PagingVO<T> data = new PagingVO<>();
+        data.setPages(Math.toIntExact(page.getPages()));
+        data.setPageSize(Math.toIntExact(page.getSize()));
+        data.setList(page.getRecords());
+        data.setTotal(Math.toIntExact(page.getTotal()));
+        data.setPageNum(Math.toIntExact(page.getCurrent()));
+        return ok(data);
     }
 }

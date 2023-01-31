@@ -4,10 +4,10 @@ import cn.dev33.satoken.stp.SaTokenInfo;
 import kim.nzxy.ly.common.exception.LyException;
 import kim.nzxy.ly.common.util.TokenUtil;
 import kim.nzxy.ly.modules.system.bo.UserLoginBO;
+import kim.nzxy.ly.modules.system.dto.UserLoginDTO;
 import kim.nzxy.ly.modules.system.mapper.AccountMapper;
 import kim.nzxy.ly.modules.system.service.AccountService;
 import kim.nzxy.ly.modules.system.strategy.UserAuthStrategyFactory;
-import kim.nzxy.ly.modules.system.dto.UserLoginDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +22,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class AccountServiceImpl implements AccountService {
     private final AccountMapper mapper;
+
     @Override
     public void register(String username, String password) {
 

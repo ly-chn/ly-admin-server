@@ -27,7 +27,7 @@ public class UserAuthStrategyFactory {
     /**
      * 获取策略
      */
-    public static UserAuthHandler getStrategy(UserAuthTypeEnum authTypeEnum){
+    public static UserAuthHandler getStrategy(UserAuthTypeEnum authTypeEnum) {
         return STRATEGY.get(authTypeEnum);
     }
 }

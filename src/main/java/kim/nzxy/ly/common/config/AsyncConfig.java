@@ -3,7 +3,6 @@ package kim.nzxy.ly.common.config;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.AsyncConfigurer;
 import org.springframework.scheduling.annotation.EnableAsync;
-import org.springframework.stereotype.Component;
 
 /**
  * 一些异步需求

@@ -14,7 +14,7 @@ import java.lang.annotation.Target;
  * @since 2022/7/26 14:18
  */
 @Retention(RetentionPolicy.RUNTIME)
-@Target({ElementType.TYPE, ElementType.METHOD, ElementType.PARAMETER})
+@Target({ElementType.FIELD, ElementType.RECORD_COMPONENT})
 public @interface MbpQuery {
     QueryTypeEnum type();
 }

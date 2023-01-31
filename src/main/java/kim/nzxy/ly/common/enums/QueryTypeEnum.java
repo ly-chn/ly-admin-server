@@ -71,6 +71,6 @@ public enum QueryTypeEnum {
     /**
      * 不在范围内
      */
-    NOT_IN;
+    NOT_IN
 
 }
