@@ -47,6 +47,7 @@ public class MybatisLogSqlInterceptor implements Interceptor {
         Object target = invocation.getTarget();
         long startTime = System.currentTimeMillis();
         try {
+            // 如需打印结果, 返回值即结果集
             return invocation.proceed();
         } finally {
             long sqlCost = System.currentTimeMillis() - startTime;
@@ -88,7 +89,8 @@ public class MybatisLogSqlInterceptor implements Interceptor {
 
         TypeHandlerRegistry typeHandlerRegistry = configuration.getTypeHandlerRegistry();
 
-        sql = sql.replaceAll("[\n\r]+", " ");
+        // 替换空格容易造成本身存在空格的查询条件被替换
+        sql = sql.replaceAll("[\n\r ]+", " ");
 
         if (parameterMappings == null) {
             return sql;
@@ -98,6 +100,7 @@ public class MybatisLogSqlInterceptor implements Interceptor {
 
         final StringBuilder result = new StringBuilder(sql);
 
+        // 解析问号并填充
         for (int i = result.length(); i > 0; i--) {
             if (result.charAt(i - 1) != '?') {
                 continue;

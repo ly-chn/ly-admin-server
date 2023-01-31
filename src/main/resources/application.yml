@@ -26,7 +26,6 @@ logging:
     console: >-
       %clr(%d{${LOG_DATEFORMAT_PATTERN:HH:mm:ss.SSS}}){faint}
       %clr(${LOG_LEVEL_PATTERN:%5p})
-      %clr(${PID:- }){magenta}
       %clr(---){faint}
       %clr(%X{userId}){red}
       %clr([%15.15t]){faint}
