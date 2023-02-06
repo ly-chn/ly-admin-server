@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kim.nzxy.ly.modules.test.mapper.TestStudentMapper">
+  <resultMap id="BaseResultMap" type="kim.nzxy.ly.modules.test.entity.TestStudent">
+    <!--@mbg.generated-->
+    <!--@Table test_student-->
+    <id column="id" property="id" />
+    <result column="stu_num" property="stuNum" />
+    <result column="sex" property="sex" />
+    <result column="birthday" property="birthday" />
+    <result column="star_count" property="starCount" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, stu_num, sex, birthday, star_count
+  </sql>
+</mapper>

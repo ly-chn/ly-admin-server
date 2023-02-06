@@ -15,6 +15,7 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Optional;
+import java.util.function.Function;
 
 /**
  * mybatis plus工具类
@@ -46,6 +47,7 @@ public class MbpUtil {
     public static <M extends BaseMapper<T>, T> LambdaQueryChainWrapper<T> buildSearch(ServiceImpl<M, T> service, Object query) {
         LambdaQueryChainWrapper<T> result = service.lambdaQuery();
         HashMap<Field, Object> fieldValueMap = new HashMap<>();
+
         for (Field field : FieldUtils.getFieldsListWithAnnotation(query.getClass(), MbpQuery.class)) {
             try {
                 Object value = FieldUtils.readField(field, query, true);
@@ -60,25 +62,29 @@ public class MbpUtil {
             return result;
         }
         HashMap<Field, Object> betweenFieldValueMap = new HashMap<>();
+
+        String entityClassName = service.getEntityClass().getName();
+        Function<String, SFunctionMask<T>> nameMask = fieldName -> new SFunctionMask<>(fieldName, entityClassName);
+        Function<Field, SFunctionMask<T>> mask = field -> new SFunctionMask<>(field.getName(), entityClassName);
         // 处理非between字段
         fieldValueMap.forEach((field, value) -> {
             MbpQuery annotation = field.getAnnotation(MbpQuery.class);
             // noinspection AlibabaSwitchStatement
             switch (annotation.type()) {
-                case EQ -> result.eq(mask(field), value);
-                case NE -> result.ne(mask(field), value);
-                case GT -> result.gt(mask(field), value);
-                case GE -> result.ge(mask(field), value);
-                case LT -> result.lt(mask(field), value);
-                case LE -> result.le(mask(field), value);
-                case LIKE -> result.like(mask(field), value);
-                case NOT_LIKE -> result.notLike(mask(field), value);
-                case LIKE_LEFT -> result.likeLeft(mask(field), value);
-                case LIKE_RIGHT -> result.likeRight(mask(field), value);
-                case NOT_LIKE_LEFT -> result.notLikeLeft(mask(field), value);
-                case NOT_LIKE_RIGHT -> result.notLikeRight(mask(field), value);
-                case IN -> result.in(mask(field), value);
-                case NOT_IN -> result.notIn(mask(field), value);
+                case EQ -> result.eq(mask.apply(field), value);
+                case NE -> result.ne(mask.apply(field), value);
+                case GT -> result.gt(mask.apply(field), value);
+                case GE -> result.ge(mask.apply(field), value);
+                case LT -> result.lt(mask.apply(field), value);
+                case LE -> result.le(mask.apply(field), value);
+                case LIKE -> result.like(mask.apply(field), value);
+                case NOT_LIKE -> result.notLike(mask.apply(field), value);
+                case LIKE_LEFT -> result.likeLeft(mask.apply(field), value);
+                case LIKE_RIGHT -> result.likeRight(mask.apply(field), value);
+                case NOT_LIKE_LEFT -> result.notLikeLeft(mask.apply(field), value);
+                case NOT_LIKE_RIGHT -> result.notLikeRight(mask.apply(field), value);
+                case IN -> result.in(mask.apply(field), value);
+                case NOT_IN -> result.notIn(mask.apply(field), value);
                 case BETWEEN, NOT_BETWEEN -> betweenFieldValueMap.put(field, value);
                 default -> throw new LyException.Panic("架构支持能力不足");
             }
@@ -98,8 +104,8 @@ public class MbpUtil {
                 MbpQuery annotation = field.getAnnotation(MbpQuery.class);
                 // noinspection AlibabaSwitchStatement
                 switch (annotation.type()) {
-                    case BETWEEN -> result.between(mask(fieldName), value, maxValue);
-                    case NOT_BETWEEN -> result.notBetween(mask(fieldName), value, maxValue);
+                    case BETWEEN -> result.between(nameMask.apply(fieldName), value, maxValue);
+                    case NOT_BETWEEN -> result.notBetween(nameMask.apply(fieldName), value, maxValue);
                     default -> throw new LyException.Panic("架构支持能力不足");
                 }
             }
@@ -117,13 +123,5 @@ public class MbpUtil {
      */
     public static <M extends BaseMapper<T>, T> Page<T> page(ServiceImpl<M, T> service, Object query) {
         return buildSearch(service, query).page(Paging.startPage());
-    }
-
-    private static <T> SFunctionMask<T> mask(String fieldName) {
-        return new SFunctionMask<>(fieldName);
-    }
-
-    private static <T> SFunctionMask<T> mask(Field field) {
-        return mask(field.getName());
     }
 }
