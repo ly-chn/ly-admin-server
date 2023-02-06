@@ -7,7 +7,7 @@ import kim.nzxy.ly.modules.system.bo.UserLoginBO;
 import kim.nzxy.ly.modules.system.dto.UserLoginDTO;
 import kim.nzxy.ly.modules.system.mapper.AccountMapper;
 import kim.nzxy.ly.modules.system.service.AccountService;
-import kim.nzxy.ly.modules.system.strategy.UserAuthStrategyFactory;
+import kim.nzxy.ly.modules.system.strategy.ticket.UserAuthStrategyFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

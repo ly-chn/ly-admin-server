@@ -1,4 +1,4 @@
-package kim.nzxy.ly.modules.system.strategy;
+package kim.nzxy.ly.modules.system.strategy.ticket;
 
 import kim.nzxy.ly.modules.system.enums.UserAuthTypeEnum;
 

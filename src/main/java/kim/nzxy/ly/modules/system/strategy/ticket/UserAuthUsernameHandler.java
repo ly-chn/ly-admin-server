@@ -1,4 +1,4 @@
-package kim.nzxy.ly.modules.system.strategy;
+package kim.nzxy.ly.modules.system.strategy.ticket;
 
 import kim.nzxy.ly.common.exception.LyException;
 import kim.nzxy.ly.common.util.Argon2Util;

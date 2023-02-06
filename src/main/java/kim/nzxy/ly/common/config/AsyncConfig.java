@@ -13,4 +13,5 @@ import org.springframework.scheduling.annotation.EnableAsync;
 @Configuration
 @EnableAsync
 public class AsyncConfig implements AsyncConfigurer {
+    // todo: 异步配置, 暂无应用场景
 }

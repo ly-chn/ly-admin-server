@@ -9,9 +9,12 @@ import kim.nzxy.ly.modules.system.dto.DictSaveDTO;
 import kim.nzxy.ly.modules.system.entity.Dict;
 import kim.nzxy.ly.modules.system.query.DictQuery;
 import kim.nzxy.ly.modules.system.service.DictService;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 
 /**
@@ -27,13 +30,13 @@ public class DictController {
 
     private final DictService service;
 
-    @GetMapping
+    @GetMapping("search")
     @Operation(summary = "列表查询")
     public Res<PagingVO<Dict>> search(DictQuery query) {
         return Res.page(service.search(query));
     }
 
-    @PostMapping
+    @PostMapping("edit")
     @Operation(summary = "编辑")
     public Res<Object> edit(@RequestBody DictSaveDTO record) {
         service.edit(record);
