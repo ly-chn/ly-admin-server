@@ -4,7 +4,6 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.fasterxml.jackson.databind.util.LRUMap;
 import kim.nzxy.ly.common.annotation.MbpQuery;
 import kim.nzxy.ly.common.exception.LyException;
 import kim.nzxy.ly.common.mask.SFunctionMask;
@@ -16,7 +15,6 @@ import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.function.Function;
 
 /**
  * mybatis plus工具类
@@ -35,11 +33,6 @@ public class MbpUtil {
      * between字段区间结尾标识
      */
     private static final String betweenMax = "Max";
-
-    /**
-     * mask缓存
-     */
-    private static final LRUMap<String, SFunctionMask<?>> maskMap = new LRUMap<>(64, 128);
 
     /**
      * 用于快速构建检索条件
@@ -119,14 +112,10 @@ public class MbpUtil {
     }
 
     private static <T> SFunctionMask<T> mask(String fieldName) {
-        if (Objects.isNull(maskMap.get(fieldName))) {
-            maskMap.put(fieldName, new SFunctionMask<>(fieldName));
-        }
-        //noinspection unchecked
-        return (SFunctionMask<T>) maskMap.get(fieldName);
+        return new SFunctionMask<>(fieldName);
     }
 
-    private static  <T> SFunctionMask<T> mask(Field field) {
+    private static <T> SFunctionMask<T> mask(Field field) {
         return mask(field.getName());
     }
 }
