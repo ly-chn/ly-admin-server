@@ -16,8 +16,7 @@ import java.time.LocalDateTime;
 /**
  * 简单实体类, 创建人创建时间, 逻辑删除
  *
- * @author xuyf
- * @since 2022/7/28 16:48
+ * @author ly-chn
  */
 @FieldNameConstants
 @SuperBuilder

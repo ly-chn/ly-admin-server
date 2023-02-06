@@ -13,8 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 /**
  * 文件相关
  *
- * @author xuyf
- * @since 2022/7/27 12:19
+ * @author ly-chn
  */
 @RestController
 @RequestMapping("file-record")

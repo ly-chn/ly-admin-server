@@ -8,8 +8,7 @@ import org.springframework.beans.factory.InitializingBean;
 /**
  * 用户授权处理
  *
- * @author xuyf
- * @since 2022/7/29 10:37
+ * @author ly-chn
  */
 public interface UserAuthHandler extends InitializingBean {
     /**

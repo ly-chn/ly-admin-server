@@ -5,8 +5,7 @@ import lombok.Getter;
 /**
  * 全局异常
  *
- * @author xuyf
- * @since 2022/7/26 14:52
+ * @author ly-chn
  */
 @Getter
 public class LyException extends RuntimeException {

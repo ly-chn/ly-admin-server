@@ -13,7 +13,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  *
  * @author ly
  * @see <a href="https://sa-token.dev33.cn/">官方文档</a>
- * @since 2022/7/26 14:03
  */
 @Configuration
 @Slf4j

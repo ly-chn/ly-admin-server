@@ -4,8 +4,7 @@ import com.baomidou.mybatisplus.extension.service.IService;
 import kim.nzxy.ly.modules.system.entity.UserAuth;
 
 /**
- * @author xuyf
- * @since 2022/7/27 14:39
+ * @author ly-chn
  */
 public interface UserAuthService extends IService<UserAuth> {
 

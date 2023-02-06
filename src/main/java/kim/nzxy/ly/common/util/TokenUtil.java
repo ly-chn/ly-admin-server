@@ -6,8 +6,7 @@ import cn.dev33.satoken.stp.StpUtil;
 /**
  * 鉴权相关工具类
  *
- * @author xuyf
- * @since 2022/7/26 14:38
+ * @author ly-chn
  */
 public class TokenUtil {
     /**

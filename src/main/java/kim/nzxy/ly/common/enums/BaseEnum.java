@@ -5,8 +5,7 @@ import com.baomidou.mybatisplus.annotation.IEnum;
 /**
  * 所有枚举一律使用字符串形式
  *
- * @author xuyf
- * @since 2022/7/27 14:45
+ * @author ly-chn
  */
 public interface BaseEnum extends IEnum<String> {
     /**

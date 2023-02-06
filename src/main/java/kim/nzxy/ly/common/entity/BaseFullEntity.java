@@ -13,8 +13,7 @@ import java.time.LocalDateTime;
 /**
  * 全量父类, id, create_by, update_by, create_time, update_time, deleted
  *
- * @author xuyf
- * @since 2022/7/26 14:28
+ * @author ly-chn
  */
 @FieldNameConstants
 @Getter

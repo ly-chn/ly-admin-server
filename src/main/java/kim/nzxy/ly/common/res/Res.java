@@ -1,15 +1,13 @@
 package kim.nzxy.ly.common.res;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import kim.nzxy.ly.modules.system.entity.Dict;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
 /**
  * 全局统一响应对象
  *
- * @author xuyf
- * @since 2022/7/26 15:40
+ * @author ly-chn
  */
 @Data
 @Accessors(chain = true)

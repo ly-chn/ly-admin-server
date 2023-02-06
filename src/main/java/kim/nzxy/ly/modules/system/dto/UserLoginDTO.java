@@ -6,8 +6,7 @@ import lombok.Data;
 /**
  * 用户登录
  *
- * @author xuyf
- * @since 2022/7/29 10:07
+ * @author ly-chn
  */
 @Data
 public class UserLoginDTO {

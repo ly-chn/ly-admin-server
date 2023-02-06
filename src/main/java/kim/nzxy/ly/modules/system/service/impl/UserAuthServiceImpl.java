@@ -7,8 +7,7 @@ import kim.nzxy.ly.modules.system.service.UserAuthService;
 import org.springframework.stereotype.Service;
 
 /**
- * @author xuyf
- * @since 2022/7/27 14:39
+ * @author ly-chn
  */
 @Service
 public class UserAuthServiceImpl extends ServiceImpl<UserAuthMapper, UserAuth> implements UserAuthService {

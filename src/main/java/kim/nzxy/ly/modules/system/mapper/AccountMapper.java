@@ -8,8 +8,7 @@ import java.util.Optional;
 /**
  * 账号相关
  *
- * @author xuyf
- * @since 2022/7/29 10:20
+ * @author ly-chn
  */
 public interface AccountMapper {
     /**

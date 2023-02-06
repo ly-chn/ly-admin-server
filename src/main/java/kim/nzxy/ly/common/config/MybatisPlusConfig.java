@@ -16,9 +16,8 @@ import java.time.LocalDateTime;
 /**
  * mybatis plus config
  *
- * @author xuyf
+ * @author ly-chn
  * @see <a href="https://baomidou.com/">官方文档</a>
- * @since 2022/7/26 14:33
  */
 @Component
 @MapperScan("kim.nzxy.ly.**.mapper")

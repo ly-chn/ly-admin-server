@@ -11,8 +11,7 @@ import org.springframework.stereotype.Component;
 /**
  * 手机号登录
  *
- * @author xuyf
- * @since 2022/7/29 10:54
+ * @author ly-chn
  */
 @Component
 public class UserAuthUsernameHandler implements UserAuthHandler {

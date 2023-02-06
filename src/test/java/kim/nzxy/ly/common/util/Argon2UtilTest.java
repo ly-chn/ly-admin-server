@@ -7,9 +7,8 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * 密码工具类
  *
- * @author xuyf
- * @since 2022/7/27 11:43
- */
+ * @author ly-chn
+*/
 class Argon2UtilTest {
 
     @Test

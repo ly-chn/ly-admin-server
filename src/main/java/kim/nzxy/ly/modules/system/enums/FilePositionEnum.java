@@ -7,8 +7,7 @@ import lombok.Getter;
 /**
  * 文件位置(本地, minio, 七牛云, 阿里等等), 仅仅实现本地以供参考
  *
- * @author xuyf
- * @since 2022/7/27 12:26
+ * @author ly-chn
  */
 @Getter
 @AllArgsConstructor

@@ -3,8 +3,7 @@ package kim.nzxy.ly.modules.system.enums;
 /**
  * 用户登录方式
  *
- * @author xuyf
- * @since 2022/7/29 9:55
+ * @author ly-chn
  */
 public enum UserAuthTypeEnum {
     /**

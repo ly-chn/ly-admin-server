@@ -8,14 +8,12 @@ import lombok.extern.slf4j.Slf4j;
 
 
 /**
- * 分页, 用于简化PageHelper
+ * 分页工具类
  *
- * @author xuyf
- * @since 2022/7/20 14:20
+ * @author ly-chn
  */
 @Slf4j
 public class Paging {
-    @SuppressWarnings("UnusedReturnValue")
     public static <T> Page<T> startPage() {
         HttpServletRequest request = RequestContextUtil.getRequest();
         Page<T> page;

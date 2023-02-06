@@ -7,8 +7,7 @@ import java.time.LocalDateTime;
 /**
  * 用户登录查询信息
  *
- * @author xuyf
- * @since 2022/7/29 10:14
+ * @author ly-chn
  */
 @Data
 public class UserLoginBO {

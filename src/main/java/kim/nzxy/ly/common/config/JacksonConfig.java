@@ -22,7 +22,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.time.format.ResolverStyle;
 import java.util.Date;
 
 /**
@@ -44,7 +43,7 @@ public class JacksonConfig {
                     .serializerByType(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ISO_LOCAL_DATE))
                     .deserializerByType(LocalDate.class, new LocalDateDeserializer(DateTimeFormatter.ISO_LOCAL_DATE))
                     .serializerByType(Date.class, new DateSerializer(false, new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")))
-                    .deserializerByType(Date.class, new DateDeserializers.DateDeserializer(){
+                    .deserializerByType(Date.class, new DateDeserializers.DateDeserializer() {
                         @Override
                         public Date deserialize(JsonParser p, DeserializationContext ctxt) throws IOException {
                             try {

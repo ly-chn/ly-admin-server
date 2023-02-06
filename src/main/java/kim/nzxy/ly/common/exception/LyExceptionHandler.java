@@ -15,8 +15,7 @@ import java.sql.SQLException;
 /**
  * 异常拦截
  *
- * @author xuyf
- * @since 2022/7/26 15:31
+ * @author ly-chn
  */
 @RestControllerAdvice
 @Slf4j

@@ -6,7 +6,7 @@ import lombok.AllArgsConstructor;
 import java.lang.invoke.SerializedLambda;
 
 /**
- * 用于构造mbp的lambda表达式, 欺骗mbp
+ * 构造mbp的lambda表达式, 用以欺骗mbp
  *
  * @author ly-chn
  * @see com.baomidou.mybatisplus.core.toolkit.support.SFunction
@@ -14,7 +14,7 @@ import java.lang.invoke.SerializedLambda;
 @SuppressWarnings("AlibabaClassNamingShouldBeCamel")
 @AllArgsConstructor
 public class SFunctionMask<T> implements SFunction<T, Object> {
-    private String implMethodName;
+    private String fieldName;
 
     @Override
     public Object apply(T t) {
@@ -30,7 +30,7 @@ public class SFunctionMask<T> implements SFunction<T, Object> {
                 null,
                 0,
                 null,
-                "get" + implMethodName,
+                "get" + fieldName,
                 null,
                 null,
                 new Object[0]

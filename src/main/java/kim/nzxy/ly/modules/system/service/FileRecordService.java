@@ -5,8 +5,7 @@ import kim.nzxy.ly.modules.system.entity.FileRecord;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
- * @author xuyf
- * @since 2022/7/27 14:39
+ * @author ly-chn
  */
 public interface FileRecordService extends IService<FileRecord> {
 

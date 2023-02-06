@@ -11,8 +11,7 @@ import lombok.NoArgsConstructor;
 /**
  * 用户授权信息
  *
- * @author xuyf
- * @since 2022/7/27 14:39
+ * @author ly-chn
  */
 @Data
 @AllArgsConstructor

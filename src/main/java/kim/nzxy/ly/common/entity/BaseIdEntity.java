@@ -10,8 +10,7 @@ import lombok.experimental.SuperBuilder;
 /**
  * 基础实体, 仅包含id, 用于统一id规则
  *
- * @author xuyf
- * @since 2022/7/26 14:26
+ * @author ly-chn
  */
 @SuperBuilder
 @NoArgsConstructor

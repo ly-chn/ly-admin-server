@@ -6,8 +6,7 @@ import kim.nzxy.ly.modules.system.dto.UserLoginDTO;
 /**
  * 账户相关
  *
- * @author xuyf
- * @since 2022/7/27 15:08
+ * @author ly-chn
  */
 public interface AccountService {
     void register(String username, String password);

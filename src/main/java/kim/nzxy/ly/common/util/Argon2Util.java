@@ -6,8 +6,7 @@ import de.mkammerer.argon2.Argon2Factory;
 /**
  * 用于密码加密/验证
  *
- * @author xuyf
- * @since 2022/7/27 11:31
+ * @author ly-chn
  */
 public class Argon2Util {
     private static final Argon2 ARGON2 = Argon2Factory.create(Argon2Factory.Argon2Types.ARGON2id);

@@ -7,8 +7,7 @@ import kim.nzxy.ly.modules.system.service.FileAuthService;
 import org.springframework.stereotype.Service;
 
 /**
- * @author xuyf
- * @since 2022/7/27 14:39
+ * @author ly-chn
  */
 @Service
 public class FileAuthServiceImpl extends ServiceImpl<FileAuthMapper, FileAuth> implements FileAuthService {

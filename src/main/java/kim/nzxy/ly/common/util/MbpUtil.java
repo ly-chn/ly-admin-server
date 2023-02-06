@@ -107,6 +107,14 @@ public class MbpUtil {
         return result;
     }
 
+    /**
+     * 快速构建检索条件并分页
+     * @param service service对象
+     * @param query   检索条件, query对象
+     * @param <M>     mapper interface
+     * @param <T>     实体类
+     * @return 分页结果
+     */
     public static <M extends BaseMapper<T>, T> Page<T> page(ServiceImpl<M, T> service, Object query) {
         return buildSearch(service, query).page(Paging.startPage());
     }

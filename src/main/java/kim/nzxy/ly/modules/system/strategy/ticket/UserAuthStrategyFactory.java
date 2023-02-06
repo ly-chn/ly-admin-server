@@ -7,8 +7,7 @@ import java.util.HashMap;
 /**
  * 账号授权相关策略
  *
- * @author xuyf
- * @since 2022/7/29 10:34
+ * @author ly-chn
  */
 public class UserAuthStrategyFactory {
     private static final HashMap<UserAuthTypeEnum, UserAuthHandler> STRATEGY = new HashMap<>();
