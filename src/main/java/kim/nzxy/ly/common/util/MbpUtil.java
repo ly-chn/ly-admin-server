@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.fasterxml.jackson.databind.util.LRUMap;
 import kim.nzxy.ly.common.annotation.MbpQuery;
 import kim.nzxy.ly.common.exception.LyException;
 import kim.nzxy.ly.common.mask.SFunctionMask;
@@ -36,6 +37,11 @@ public class MbpUtil {
     private static final String betweenMax = "Max";
 
     /**
+     * mask缓存
+     */
+    private static final LRUMap<String, SFunctionMask<?>> maskMap = new LRUMap<>(64, 128);
+
+    /**
      * 用于快速构建检索条件
      *
      * @param service service对象
@@ -46,9 +52,6 @@ public class MbpUtil {
      */
     public static <M extends BaseMapper<T>, T> LambdaQueryChainWrapper<T> buildSearch(ServiceImpl<M, T> service, Object query) {
         LambdaQueryChainWrapper<T> result = service.lambdaQuery();
-        String entityClassName = service.getEntityClass().getName();
-        Function<String, SFunctionMask<T>> mask = fieldName -> new SFunctionMask<>(fieldName, entityClassName);
-        Function<Field, SFunctionMask<T>> maskField = field -> new SFunctionMask<>(field.getName(), entityClassName);
         HashMap<Field, Object> fieldValueMap = new HashMap<>();
         for (Field field : FieldUtils.getFieldsListWithAnnotation(query.getClass(), MbpQuery.class)) {
             try {
@@ -69,20 +72,20 @@ public class MbpUtil {
             MbpQuery annotation = field.getAnnotation(MbpQuery.class);
             // noinspection AlibabaSwitchStatement
             switch (annotation.type()) {
-                case EQ -> result.eq(maskField.apply(field), value);
-                case NE -> result.ne(maskField.apply(field), value);
-                case GT -> result.gt(maskField.apply(field), value);
-                case GE -> result.ge(maskField.apply(field), value);
-                case LT -> result.lt(maskField.apply(field), value);
-                case LE -> result.le(maskField.apply(field), value);
-                case LIKE -> result.like(maskField.apply(field), value);
-                case NOT_LIKE -> result.notLike(maskField.apply(field), value);
-                case LIKE_LEFT -> result.likeLeft(maskField.apply(field), value);
-                case LIKE_RIGHT -> result.likeRight(maskField.apply(field), value);
-                case NOT_LIKE_LEFT -> result.notLikeLeft(maskField.apply(field), value);
-                case NOT_LIKE_RIGHT -> result.notLikeRight(maskField.apply(field), value);
-                case IN -> result.in(maskField.apply(field), value);
-                case NOT_IN -> result.notIn(maskField.apply(field), value);
+                case EQ -> result.eq(mask(field), value);
+                case NE -> result.ne(mask(field), value);
+                case GT -> result.gt(mask(field), value);
+                case GE -> result.ge(mask(field), value);
+                case LT -> result.lt(mask(field), value);
+                case LE -> result.le(mask(field), value);
+                case LIKE -> result.like(mask(field), value);
+                case NOT_LIKE -> result.notLike(mask(field), value);
+                case LIKE_LEFT -> result.likeLeft(mask(field), value);
+                case LIKE_RIGHT -> result.likeRight(mask(field), value);
+                case NOT_LIKE_LEFT -> result.notLikeLeft(mask(field), value);
+                case NOT_LIKE_RIGHT -> result.notLikeRight(mask(field), value);
+                case IN -> result.in(mask(field), value);
+                case NOT_IN -> result.notIn(mask(field), value);
                 case BETWEEN, NOT_BETWEEN -> betweenFieldValueMap.put(field, value);
                 default -> throw new LyException.Panic("架构支持能力不足");
             }
@@ -102,8 +105,8 @@ public class MbpUtil {
                 MbpQuery annotation = field.getAnnotation(MbpQuery.class);
                 // noinspection AlibabaSwitchStatement
                 switch (annotation.type()) {
-                    case BETWEEN -> result.between(mask.apply(fieldName), value, maxValue);
-                    case NOT_BETWEEN -> result.notBetween(mask.apply(fieldName), value, maxValue);
+                    case BETWEEN -> result.between(mask(fieldName), value, maxValue);
+                    case NOT_BETWEEN -> result.notBetween(mask(fieldName), value, maxValue);
                     default -> throw new LyException.Panic("架构支持能力不足");
                 }
             }
@@ -113,5 +116,17 @@ public class MbpUtil {
 
     public static <M extends BaseMapper<T>, T> Page<T> page(ServiceImpl<M, T> service, Object query) {
         return buildSearch(service, query).page(Paging.startPage());
+    }
+
+    private static <T> SFunctionMask<T> mask(String fieldName) {
+        if (Objects.isNull(maskMap.get(fieldName))) {
+            maskMap.put(fieldName, new SFunctionMask<>(fieldName));
+        }
+        //noinspection unchecked
+        return (SFunctionMask<T>) maskMap.get(fieldName);
+    }
+
+    private static  <T> SFunctionMask<T> mask(Field field) {
+        return mask(field.getName());
     }
 }

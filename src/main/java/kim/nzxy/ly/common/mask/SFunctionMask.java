@@ -15,7 +15,6 @@ import java.lang.invoke.SerializedLambda;
 @AllArgsConstructor
 public class SFunctionMask<T> implements SFunction<T, Object> {
     private String implMethodName;
-    private String instantiatedMethodType;
 
     @Override
     public Object apply(T t) {
@@ -33,7 +32,7 @@ public class SFunctionMask<T> implements SFunction<T, Object> {
                 null,
                 "get" + implMethodName,
                 null,
-                "LY" + instantiatedMethodType + ";",
+                null,
                 new Object[0]
         );
     }
