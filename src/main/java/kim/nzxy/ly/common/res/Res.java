@@ -1,6 +1,7 @@
 package kim.nzxy.ly.common.res;
 
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import kim.nzxy.ly.common.exception.LyException;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
@@ -41,6 +42,9 @@ public class Res<T> {
      * @return 统一封装返回单条成功数据
      */
     public static <T> Res<T> ok(T data, String message) {
+        if (data instanceof Page) {
+            throw new LyException.Panic("使用Res#page方法来返回分页数据");
+        }
         Res<T> msg = new Res<T>();
         msg.setCode(2000);
         msg.setMessage(message);

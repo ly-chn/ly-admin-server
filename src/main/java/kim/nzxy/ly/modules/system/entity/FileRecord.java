@@ -2,7 +2,7 @@ package kim.nzxy.ly.modules.system.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
-import kim.nzxy.ly.common.entity.BaseSimpleEntity;
+import kim.nzxy.ly.common.entity.BaseFinalEntity;
 import kim.nzxy.ly.modules.system.enums.FilePositionEnum;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,7 +21,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @TableName(value = "sys_file_record")
 @SuperBuilder
-public class FileRecord extends BaseSimpleEntity {
+public class FileRecord extends BaseFinalEntity {
 
     /**
      * hash

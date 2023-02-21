@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-public abstract class BaseSimpleEntity extends BaseIdEntity {
+public abstract class BaseFinalEntity extends BaseIdEntity {
     /**
      * 创建时间
      */

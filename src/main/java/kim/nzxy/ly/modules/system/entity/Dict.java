@@ -1,29 +1,22 @@
 package kim.nzxy.ly.modules.system.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
+import kim.nzxy.ly.common.entity.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-
-import java.time.LocalDateTime;
 
 /**
  * 字典
  */
+@EqualsAndHashCode(callSuper = true)
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value = "sys_dict")
-public class Dict {
-    /**
-     * id
-     */
-    @TableId(value = "id", type = IdType.ASSIGN_ID)
-    private Long id;
-
+public class Dict extends BaseEntity {
     /**
      * 字典名称
      */
@@ -47,34 +40,4 @@ public class Dict {
      */
     @TableField(value = "remark")
     private String remark;
-
-    /**
-     * 创建人id
-     */
-    @TableField(value = "create_by")
-    private Long createBy;
-
-    /**
-     * 创建时间
-     */
-    @TableField(value = "create_time")
-    private LocalDateTime createTime;
-
-    /**
-     * 修改人id
-     */
-    @TableField(value = "update_by")
-    private Long updateBy;
-
-    /**
-     * 最后修改时间
-     */
-    @TableField(value = "update_time")
-    private LocalDateTime updateTime;
-
-    /**
-     * 删除状态
-     */
-    @TableField(value = "deleted")
-    private Boolean deleted;
 }

@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.FieldNameConstants;
 import lombok.experimental.SuperBuilder;
@@ -20,7 +21,8 @@ import java.time.LocalDateTime;
 @Setter
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
-public abstract class BaseFullEntity extends BaseSimpleEntity {
+@NoArgsConstructor
+public abstract class BaseEntity extends BaseFinalEntity {
 
     /**
      * 更新时间

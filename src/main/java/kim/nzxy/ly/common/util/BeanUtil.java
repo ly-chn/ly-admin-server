@@ -4,6 +4,7 @@ import org.springframework.beans.BeanUtils;
 
 /**
  * bean工具, 期待方案的平替
+ * todo: 修改类名, 太多重命类了
  *
  * @author ly-chn
  */
