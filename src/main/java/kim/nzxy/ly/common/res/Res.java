@@ -105,7 +105,7 @@ public class Res<T> {
         return Res.fail(message, 5000);
     }
 
-    public static <T> Res<PagingVO<T>> page(Page<T> page) {
+    public static <T> Res<PagingVO<T>> ok(Page<T> page) {
         PagingVO<T> data = new PagingVO<>();
         data.setPages(Math.toIntExact(page.getPages()));
         data.setPageSize(Math.toIntExact(page.getSize()));

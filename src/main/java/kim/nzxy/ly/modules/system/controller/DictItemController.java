@@ -1,10 +1,10 @@
 package kim.nzxy.ly.modules.system.controller;
 
 import cn.dev33.satoken.annotation.SaIgnore;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import kim.nzxy.ly.common.res.PagingVO;
 import kim.nzxy.ly.common.res.Res;
 import kim.nzxy.ly.modules.system.dto.DictSaveDTO;
 import kim.nzxy.ly.modules.system.entity.DictItem;
@@ -24,7 +24,7 @@ public class DictItemController {
     private final DictItemService service;
 
     @GetMapping("search")
-    public Res<Page<DictItem>> search(@Valid DictItemQuery query) {
+    public Res<PagingVO<DictItem>> search(@Valid DictItemQuery query) {
         return Res.ok(service.search(query));
     }
 
