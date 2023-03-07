@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kim.nzxy.ly.modules.system.mapper.PermissionMapper">
+  <resultMap id="BaseResultMap" type="kim.nzxy.ly.modules.system.entity.Permission">
+    <!--@mbg.generated-->
+    <!--@Table sys_permission-->
+    <id column="id" property="id" />
+    <result column="parent_id" property="parentId" />
+    <result column="name" property="name" />
+    <result column="path" property="path" />
+    <result column="component" property="component" />
+    <result column="component_name" property="componentName" />
+    <result column="redirect" property="redirect" />
+    <result column="permission_type" property="permissionType" />
+    <result column="auth_symbol" property="authSymbol" />
+    <result column="order_weight" property="orderWeight" />
+    <result column="keep_alive" property="keepAlive" />
+    <result column="hidden" property="hidden" />
+    <result column="disabled" property="disabled" />
+    <result column="remark" property="remark" />
+    <result column="create_tab" property="createTab" />
+    <result column="create_by" property="createBy" />
+    <result column="create_time" property="createTime" />
+    <result column="update_by" property="updateBy" />
+    <result column="update_time" property="updateTime" />
+    <result column="deleted" property="deleted" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, parent_id, `name`, `path`, component, component_name, redirect, permission_type, 
+    auth_symbol, order_weight, keep_alive, hidden, disabled, remark, create_tab, create_by, 
+    create_time, update_by, update_time, deleted
+  </sql>
+</mapper>
