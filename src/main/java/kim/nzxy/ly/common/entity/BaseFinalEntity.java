@@ -1,8 +1,6 @@
 package kim.nzxy.ly.common.entity;
 
-import com.baomidou.mybatisplus.annotation.FieldFill;
-import com.baomidou.mybatisplus.annotation.TableField;
-import com.baomidou.mybatisplus.annotation.TableLogic;
+import com.baomidou.mybatisplus.annotation.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -22,9 +20,13 @@ import java.time.LocalDateTime;
 @SuperBuilder
 @Getter
 @Setter
-@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-public abstract class BaseFinalEntity extends BaseIdEntity {
+public abstract class BaseFinalEntity {
+    /**
+     * id
+     */
+    @TableId(type = IdType.ASSIGN_ID)
+    private Long id;
     /**
      * 创建时间
      */
@@ -40,7 +42,6 @@ public abstract class BaseFinalEntity extends BaseIdEntity {
     /**
      * 为true表示已删除
      */
-    @TableField()
     @TableLogic
     @JsonIgnore
     private Boolean deleted;

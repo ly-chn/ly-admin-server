@@ -4,7 +4,7 @@ import cn.dev33.satoken.annotation.SaIgnore;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import kim.nzxy.ly.common.res.Res;
-import kim.nzxy.ly.modules.system.dto.DictSaveDTO;
+import kim.nzxy.ly.modules.system.dto.DictEditDTO;
 import kim.nzxy.ly.modules.system.entity.Dict;
 import kim.nzxy.ly.modules.system.service.DictService;
 import lombok.RequiredArgsConstructor;
@@ -35,13 +35,15 @@ public class DictController {
 
     @PostMapping("edit")
     @Operation(summary = "编辑")
-    public Res<Object> edit(@RequestBody DictSaveDTO record) {
+    public Res<Object> edit(@RequestBody DictEditDTO record) {
         service.edit(record);
         return Res.ok();
     }
 
     @DeleteMapping("remove/{id}")
-    public void delete(@PathVariable Long id) {
+    @Operation(summary = "移除")
+    public Res<Object> delete(@PathVariable Long id) {
         service.delete(id);
+        return Res.ok();
     }
 }

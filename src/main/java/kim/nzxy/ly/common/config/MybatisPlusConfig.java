@@ -27,7 +27,8 @@ public class MybatisPlusConfig implements MetaObjectHandler {
         this.strictInsertFill(metaObject, BaseFinalEntity.Fields.createBy, TokenUtil::getLoginId, Long.class);
         this.strictInsertFill(metaObject, BaseFinalEntity.Fields.createTime, LocalDateTime::now, LocalDateTime.class);
         this.strictInsertFill(metaObject, BaseEntity.Fields.updateBy, TokenUtil::getLoginId, Long.class);
-        this.strictUpdateFill(metaObject, BaseEntity.Fields.updateTime, LocalDateTime::now, LocalDateTime.class);
+        this.strictInsertFill(metaObject, BaseEntity.Fields.updateTime, LocalDateTime::now, LocalDateTime.class);
+        this.strictInsertFill(metaObject, BaseEntity.Fields.deleted, () -> false, Boolean.class);
     }
 
     @Override

@@ -2,6 +2,7 @@ package kim.nzxy.ly.common.config;
 
 import cn.dev33.satoken.interceptor.SaInterceptor;
 import cn.dev33.satoken.stp.StpUtil;
+import kim.nzxy.ly.common.util.TokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.context.annotation.Configuration;

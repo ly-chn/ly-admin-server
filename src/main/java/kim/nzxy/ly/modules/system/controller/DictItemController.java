@@ -6,14 +6,20 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import kim.nzxy.ly.common.res.PagingVO;
 import kim.nzxy.ly.common.res.Res;
-import kim.nzxy.ly.modules.system.dto.DictSaveDTO;
+import kim.nzxy.ly.modules.system.dto.DictItemEditDTO;
 import kim.nzxy.ly.modules.system.entity.DictItem;
 import kim.nzxy.ly.modules.system.query.DictItemQuery;
 import kim.nzxy.ly.modules.system.service.DictItemService;
+import kim.nzxy.ly.modules.system.vo.DictItemVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+/**
+ * @author ly-chn
+ */
 @RestController
 @RequestMapping("sys-dict-item")
 @RequiredArgsConstructor
@@ -30,14 +36,20 @@ public class DictItemController {
 
     @PostMapping("edit")
     @Operation(summary = "编辑")
-    public Res<Object> edit(@RequestBody DictSaveDTO record) {
+    public Res<Object> edit(@RequestBody DictItemEditDTO record) {
         service.edit(record);
         return Res.ok();
     }
 
     @DeleteMapping("remove/{id}")
-    public void delete(@PathVariable Long id) {
+    public Res<Object> delete(@PathVariable Long id) {
         service.delete(id);
+        return Res.ok();
+    }
+
+    @GetMapping("code/{dictCode}")
+    public Res<List<DictItemVO>> getByDictCode(@PathVariable String dictCode) {
+        return Res.ok(service.getByDictCode(dictCode));
     }
 
 }

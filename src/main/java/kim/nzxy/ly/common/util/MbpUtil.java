@@ -2,8 +2,10 @@ package kim.nzxy.ly.common.util;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapper;
+import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import kim.nzxy.ly.common.annotation.MbpEditIgnore;
 import kim.nzxy.ly.common.annotation.MbpQuery;
 import kim.nzxy.ly.common.exception.LyException;
 import kim.nzxy.ly.common.mask.SFunctionMask;
@@ -34,6 +36,10 @@ public class MbpUtil {
      * between字段区间结尾标识
      */
     private static final String betweenMax = "Max";
+    /**
+     * id字段名
+     */
+    private static final String idFieldName = "id";
 
     /**
      * 用于快速构建检索条件
@@ -51,7 +57,7 @@ public class MbpUtil {
         for (Field field : FieldUtils.getFieldsListWithAnnotation(query.getClass(), MbpQuery.class)) {
             try {
                 Object value = FieldUtils.readField(field, query, true);
-                if (Objects.isNull(value) || (value instanceof String && StringUtils.isEmpty((String) value))) {
+                if (invalidValue(value)) {
                     continue;
                 }
                 fieldValueMap.put(field, value);
@@ -115,6 +121,7 @@ public class MbpUtil {
 
     /**
      * 快速构建检索条件并分页
+     *
      * @param service service对象
      * @param query   检索条件, query对象
      * @param <M>     mapper interface
@@ -123,5 +130,44 @@ public class MbpUtil {
      */
     public static <M extends BaseMapper<T>, T> Page<T> page(ServiceImpl<M, T> service, Object query) {
         return buildSearch(service, query).page(Paging.startPage());
+    }
+
+    /**
+     * id存在则执行更新操作, 否则执行删除操作, 仅操作dto内包含的对象
+     *
+     * @return 成功与否, 如修改失败则返回false, 其余均为true
+     */
+    public static <M extends BaseMapper<T>, T> boolean edit(ServiceImpl<M, T> service, Object record) {
+        String entityClassName = service.getEntityClass().getName();
+        Function<Field, SFunctionMask<T>> mask = field -> new SFunctionMask<>(field.getName(), entityClassName);
+        try {
+            Field idField = FieldUtils.getField(record.getClass(), idFieldName, true);
+            Object id = FieldUtils.readField(idField, record, true);
+            if (invalidValue(id)) {
+                return service.save(BeanUtil.toBean(record, service.getEntityClass()));
+            }
+            LambdaUpdateChainWrapper<T> updateChainWrapper = service.lambdaUpdate().eq(mask.apply(idField), id);
+            for (Field field : FieldUtils.getAllFieldsList(record.getClass())) {
+                if (idFieldName.equals(field.getName())) {
+                    continue;
+                }
+                if (field.isAnnotationPresent(MbpEditIgnore.class)) {
+                    continue;
+                }
+                updateChainWrapper.set(mask.apply(field), FieldUtils.readField(field, record, true));
+            }
+            return updateChainWrapper.update();
+        } catch (IllegalAccessException e) {
+            throw new LyException.Panic("可能需要提供id字段", e);
+        }
+    }
+
+    /**
+     * 非null, 非空字符串, 即为有效值
+     *
+     * @return true表示值有效
+     */
+    private static boolean invalidValue(Object value) {
+        return Objects.isNull(value) || (value instanceof String && StringUtils.isEmpty((String) value));
     }
 }
