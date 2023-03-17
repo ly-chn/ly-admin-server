@@ -20,9 +20,7 @@ import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.sql.Statement;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -46,13 +44,20 @@ public class MybatisLogSqlInterceptor implements Interceptor {
     public Object intercept(Invocation invocation) throws Throwable {
         Object target = invocation.getTarget();
         long startTime = System.currentTimeMillis();
+        int lines = 1;
         try {
             // 如需打印结果, 返回值即结果集
-            return invocation.proceed();
+            Object proceed = invocation.proceed();
+            if (proceed instanceof Collection<?>) {
+                lines = ((List<?>) proceed).size();
+            }
+            return proceed;
         } finally {
-            long sqlCost = System.currentTimeMillis() - startTime;
-            String sql = this.getSql(target);
-            log.info("sql took {}ms: {}", sqlCost, sql);
+            if (log.isDebugEnabled()) {
+                long sqlCost = System.currentTimeMillis() - startTime;
+                String sql = this.getSql(target);
+                log.info("sql took {}ms for {} line: {}", sqlCost, lines, sql);
+            }
         }
     }
 

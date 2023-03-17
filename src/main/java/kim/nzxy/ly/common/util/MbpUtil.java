@@ -140,13 +140,17 @@ public class MbpUtil {
     public static <M extends BaseMapper<T>, T> boolean edit(ServiceImpl<M, T> service, Object record) {
         String entityClassName = service.getEntityClass().getName();
         Function<Field, SFunctionMask<T>> mask = field -> new SFunctionMask<>(field.getName(), entityClassName);
+        Field idField = FieldUtils.getField(record.getClass(), idFieldName, true);
+        if (Objects.isNull(idField)) {
+            return service.save(BeanUtil.toBean(record, service.getEntityClass()));
+        }
+        LambdaUpdateChainWrapper<T> updateChainWrapper = null;
         try {
-            Field idField = FieldUtils.getField(record.getClass(), idFieldName, true);
             Object id = FieldUtils.readField(idField, record, true);
             if (invalidValue(id)) {
                 return service.save(BeanUtil.toBean(record, service.getEntityClass()));
             }
-            LambdaUpdateChainWrapper<T> updateChainWrapper = service.lambdaUpdate().eq(mask.apply(idField), id);
+            updateChainWrapper = service.lambdaUpdate().eq(mask.apply(idField), id);
             for (Field field : FieldUtils.getAllFieldsList(record.getClass())) {
                 if (idFieldName.equals(field.getName())) {
                     continue;
@@ -156,10 +160,10 @@ public class MbpUtil {
                 }
                 updateChainWrapper.set(mask.apply(field), FieldUtils.readField(field, record, true));
             }
-            return updateChainWrapper.update();
         } catch (IllegalAccessException e) {
             throw new LyException.Panic("可能需要提供id字段", e);
         }
+        return updateChainWrapper.update();
     }
 
     /**

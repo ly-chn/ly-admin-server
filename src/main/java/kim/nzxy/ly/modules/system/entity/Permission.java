@@ -1,11 +1,15 @@
 package kim.nzxy.ly.modules.system.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import kim.nzxy.ly.common.entity.BaseEntity;
+import kim.nzxy.ly.common.util.TreeNode;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+
+import java.util.List;
 
 /**
  * 权限信息配置
@@ -15,7 +19,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @TableName(value = "sys_permission")
-public class Permission extends BaseEntity {
+public class Permission extends BaseEntity implements TreeNode<Permission> {
     /**
      * 父级id
      */
@@ -85,4 +89,7 @@ public class Permission extends BaseEntity {
      * 是否新标签页打开, 字典: sys_if
      */
     private Boolean createTab;
+
+    @TableField(exist = false)
+    private List<Permission> children;
 }

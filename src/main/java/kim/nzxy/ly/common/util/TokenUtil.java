@@ -1,5 +1,6 @@
 package kim.nzxy.ly.common.util;
 
+import cn.dev33.satoken.stp.SaLoginModel;
 import cn.dev33.satoken.stp.SaTokenInfo;
 import cn.dev33.satoken.stp.StpUtil;
 
@@ -13,7 +14,7 @@ public class TokenUtil {
      * @return 获取当前用户id
      */
     public static Long getLoginId() {
-        return 1L;
+        return StpUtil.getLoginIdAsLong();
     }
 
     public static SaTokenInfo login(Long id) {

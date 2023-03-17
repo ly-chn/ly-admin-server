@@ -33,7 +33,7 @@ logging:
       %clr(%d{${LOG_DATEFORMAT_PATTERN:HH:mm:ss.SSS}}){faint}
       %clr(${LOG_LEVEL_PATTERN:%5p})
       %clr(%X{userId}){red}
-      %clr(%-40.40logger{39}){cyan}
+      %clr(%logger{39}){cyan}
       %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}
 
 #mybatis plus 设置
