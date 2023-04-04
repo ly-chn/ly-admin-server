@@ -13,9 +13,6 @@ import org.springframework.web.filter.CorsFilter;
  */
 @Configuration
 public class CorsConfig {
-    /**
-     * 允许跨域器
-     */
     @Bean
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
@@ -28,6 +25,8 @@ public class CorsConfig {
         corsConfiguration.addAllowedOrigin(CorsConfiguration.ALL);
         corsConfiguration.addAllowedHeader(CorsConfiguration.ALL);
         corsConfiguration.addAllowedMethod(CorsConfiguration.ALL);
+        // 允许cookie
+        // corsConfiguration.setAllowCredentials(true);
         return corsConfiguration;
     }
 }

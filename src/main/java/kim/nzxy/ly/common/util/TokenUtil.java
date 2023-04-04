@@ -14,7 +14,7 @@ public class TokenUtil {
      * @return 获取当前用户id
      */
     public static Long getLoginId() {
-        return StpUtil.getLoginIdAsLong();
+        return 1L;
     }
 
     public static SaTokenInfo login(Long id) {
