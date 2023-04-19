@@ -4,6 +4,7 @@ public record PermissionEditDTO(
         Long id,
         Long parentId,
         String name,
+        String icon,
         String path,
         String component,
         String componentName,

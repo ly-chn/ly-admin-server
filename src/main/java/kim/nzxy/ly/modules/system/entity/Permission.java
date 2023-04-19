@@ -31,6 +31,11 @@ public class Permission extends BaseEntity implements TreeNode<Permission> {
     private String name;
 
     /**
+     * 菜单图标
+     */
+    private String icon;
+
+    /**
      * 访问路径
      */
     private String path;
