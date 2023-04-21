@@ -32,7 +32,7 @@ class PermissionControllerTest {
         mockMvc.perform(post("/sys-permission/edit")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(new PermissionEditDTO(
-                                null, null, "Tmp", "/tmp", "@/layouts/page-layout/page-layout.vue",
+                                null, null, "Tmp", "", "/tmp", "@/layouts/page-layout/page-layout.vue",
                                 "PageLayout", "/tmp/tmp", "route", null, 1L, false,
                                 false, false, "无", false
                         )))

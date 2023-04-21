@@ -1,5 +1,7 @@
 package kim.nzxy.ly.modules.system.service.impl;
 
+import cn.dev33.satoken.stp.StpLogic;
+import cn.dev33.satoken.stp.StpUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import kim.nzxy.ly.common.entity.BaseEntity;
@@ -21,7 +23,7 @@ public class DictItemServiceImpl extends ServiceImpl<DictItemMapper, DictItem> i
 
     @Override
     public Page<DictItem> search(DictItemQuery query) {
-        return MbpUtil.page(this, query);
+        return MbpUtil.page(this, query, false, DictItem::getOrderWeight);
     }
 
     @Override

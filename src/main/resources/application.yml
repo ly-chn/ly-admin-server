@@ -29,12 +29,11 @@ logging:
       max-history: 30
       max-file-size: 10MB
   pattern:
-    console: >-
-      %clr(%d{${LOG_DATEFORMAT_PATTERN:HH:mm:ss.SSS}}){faint}
-      %clr(${LOG_LEVEL_PATTERN:%5p})
-      %clr(%X{userId}){red}
-      %clr(%logger{39}){cyan}
-      %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}
+    console: "%clr(%d{${LOG_DATEFORMAT_PATTERN:HH:mm:ss.SSS}}){faint}\
+              %clr(${LOG_LEVEL_PATTERN:%5p}) \
+              %clr(%X{userId}){red}\
+              %clr(%logger{39}){cyan}\
+              %clr(:){faint} %m%n${LOG_EXCEPTION_CONVERSION_WORD:%wEx}"
 
 #mybatis plus 设置
 mybatis-plus:
