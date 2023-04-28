@@ -23,11 +23,6 @@ public class AccountServiceImpl implements AccountService {
     private final AccountMapper mapper;
 
     @Override
-    public void register(String username, String password) {
-
-    }
-
-    @Override
     public SaTokenInfo login(UserLoginDTO loginInfo) {
         Optional<UserLoginBO> loginBO = mapper.findUserAuth(loginInfo);
         loginBO.orElseThrow(() -> new LyException.Minor("用户信息不存在"));

@@ -15,7 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @author ly
  * @see <a href="https://sa-token.dev33.cn/">官方文档</a>
  */
-// @Configuration
+@Configuration
 @Slf4j
 public class SaTokenConfig implements WebMvcConfigurer {
     /**
@@ -25,6 +25,6 @@ public class SaTokenConfig implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(new SaInterceptor(handler -> MDC.put("userId", StpUtil.getLoginIdAsString())))
                 .addPathPatterns("/**")
-                .excludePathPatterns("/doc.html", "/webjars/**", "/v3/api-docs/swagger-config");
+                .excludePathPatterns("/doc.html", "/webjars/**", "/v3/api-docs/swagger-config", "/error");
     }
 }

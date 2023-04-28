@@ -9,7 +9,6 @@ import kim.nzxy.ly.modules.system.dto.UserLoginDTO;
  * @author ly-chn
  */
 public interface AccountService {
-    void register(String username, String password);
 
     SaTokenInfo login(UserLoginDTO loginInfo);
 }

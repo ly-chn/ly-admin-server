@@ -9,19 +9,9 @@ import lombok.Getter;
  */
 @Getter
 public class LyException extends RuntimeException {
-    /**
-     * 异常具体细节
-     */
-    private final String message;
-    /**
-     * 相应异常
-     */
-    private final Throwable cause;
 
     private LyException(String message, Throwable cause) {
         super(message, cause);
-        this.message = message;
-        this.cause = cause;
     }
 
     /**

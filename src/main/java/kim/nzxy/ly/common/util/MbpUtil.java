@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.conditions.query.LambdaQueryChainWrapp
 import com.baomidou.mybatisplus.extension.conditions.update.LambdaUpdateChainWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import jakarta.servlet.http.HttpServletRequest;
 import kim.nzxy.ly.common.annotation.MbpEditIgnore;
 import kim.nzxy.ly.common.annotation.MbpQuery;
 import kim.nzxy.ly.common.exception.LyException;
@@ -15,10 +16,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
 
 import java.lang.reflect.Field;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import java.util.function.Function;
 
 /**
@@ -42,21 +40,34 @@ public class MbpUtil {
      * id字段名
      */
     private static final String idFieldName = "id";
+    /**
+     * 排序列名
+     */
+    public static final String orderByFieldName = "orderBy";
+    /**
+     * 排序方向
+     */
+    public static final String sortDirection = "sortDirection";
+    /**
+     * 逆序
+     */
+    public static final String desc = "desc";
+    /**
+     * 排序列排序方式
+     */
+    private static final char orderBySeparator = ',';
 
     /**
      * 用于快速构建检索条件
      *
-     * @param service        service对象
-     * @param query          检索条件, query对象
-     * @param isAsc          排序方式
-     * @param orderByColumns 排序字段
-     * @param <M>            mapper interface
-     * @param <T>            实体类
+     * @param service   service对象
+     * @param query     检索条件, query对象
+     * @param autoOrder 是否自动排序, 为true将取请求行中的排序参数进行排序
+     * @param <M>       mapper interface
+     * @param <T>       实体类
      * @return 构建完成的检索条件
      */
-    @SafeVarargs
-    public static <M extends BaseMapper<T>, T> LambdaQueryChainWrapper<T> buildSearch(
-            ServiceImpl<M, T> service, Object query, boolean isAsc, SFunction<T, ?>... orderByColumns) {
+    public static <M extends BaseMapper<T>, T> LambdaQueryChainWrapper<T> buildSearch(ServiceImpl<M, T> service, Object query, boolean autoOrder) {
         LambdaQueryChainWrapper<T> result = service.lambdaQuery();
         HashMap<Field, Object> fieldValueMap = new HashMap<>(8);
 
@@ -73,7 +84,7 @@ public class MbpUtil {
         if (fieldValueMap.isEmpty()) {
             return result;
         }
-        HashMap<Field, Object> betweenFieldValueMap = new HashMap<>();
+        HashMap<Field, Object> betweenFieldValueMap = new HashMap<>(16);
 
         String entityClassName = service.getEntityClass().getName();
         Function<String, SFunctionMask<T>> nameMask = fieldName -> new SFunctionMask<>(fieldName, entityClassName);
@@ -123,14 +134,23 @@ public class MbpUtil {
             }
         });
         // 排序
-        if (orderByColumns.length != 0) {
-            result.orderBy(true, isAsc, Arrays.asList(orderByColumns));
+        if (autoOrder) {
+            HttpServletRequest request = RequestContextUtil.getRequest();
+            String orderByColumn = request.getParameter(orderByFieldName);
+            if (StringUtils.isEmpty(orderByColumn)) {
+                return result;
+            }
+            boolean isAsc = !desc.equals(request.getParameter(sortDirection));
+            List<SFunction<T, Object>> list = Arrays.stream(StringUtils.split(orderByColumn, orderBySeparator))
+                    .map(column -> (SFunction<T, Object>) nameMask.apply(column)).toList();
+            // noinspection unchecked
+            result.orderBy(true, isAsc, (SFunction<T, ?>) list);
         }
         return result;
     }
 
     /**
-     * 用于快速构建检索条件
+     * 用于快速构建检索条件, 自动排序
      *
      * @param service service对象
      * @param query   检索条件, query对象
@@ -139,11 +159,26 @@ public class MbpUtil {
      * @return 构建完成的检索条件
      */
     public static <M extends BaseMapper<T>, T> LambdaQueryChainWrapper<T> buildSearch(ServiceImpl<M, T> service, Object query) {
-        return buildSearch(service, query, false);
+        return buildSearch(service, query, true);
     }
+
 
     /**
      * 快速构建检索条件并分页
+     *
+     * @param service   service对象
+     * @param query     检索条件, query对象
+     * @param autoOrder 是否自动排序
+     * @param <M>       mapper interface
+     * @param <T>       实体类
+     * @return 分页结果
+     */
+    public static <M extends BaseMapper<T>, T> Page<T> page(ServiceImpl<M, T> service, Object query, boolean autoOrder) {
+        return buildSearch(service, query, autoOrder).page(Paging.startPage());
+    }
+
+    /**
+     * 快速构建检索条件并分页, 自动排序
      *
      * @param service service对象
      * @param query   检索条件, query对象
@@ -152,23 +187,7 @@ public class MbpUtil {
      * @return 分页结果
      */
     public static <M extends BaseMapper<T>, T> Page<T> page(ServiceImpl<M, T> service, Object query) {
-        return buildSearch(service, query).page(Paging.startPage());
-    }
-
-    /**
-     * 快速构建检索条件并分页
-     *
-     * @param service        service对象
-     * @param query          检索条件, query对象
-     * @param isAsc          排序方式
-     * @param orderByColumns 排序字段
-     * @param <M>            mapper interface
-     * @param <T>            实体类
-     * @return 分页结果
-     */
-    @SafeVarargs
-    public static <M extends BaseMapper<T>, T> Page<T> page(ServiceImpl<M, T> service, Object query, boolean isAsc, SFunction<T, ?>... orderByColumns) {
-        return buildSearch(service, query, isAsc, orderByColumns).page(Paging.startPage());
+        return page(service, query, true);
     }
 
     /**
@@ -183,7 +202,7 @@ public class MbpUtil {
         if (Objects.isNull(idField)) {
             return service.save(BeanUtil.toBean(record, service.getEntityClass()));
         }
-        LambdaUpdateChainWrapper<T> updateChainWrapper = null;
+        LambdaUpdateChainWrapper<T> updateChainWrapper;
         try {
             Object id = FieldUtils.readField(idField, record, true);
             if (invalidValue(id)) {
