@@ -45,18 +45,20 @@ public class MybatisLogSqlInterceptor implements Interceptor {
         Object target = invocation.getTarget();
         long startTime = System.currentTimeMillis();
         int lines = 1;
+        String status = "failed";
         try {
             // 如需打印结果, 返回值即结果集
             Object proceed = invocation.proceed();
             if (proceed instanceof Collection<?>) {
                 lines = ((List<?>) proceed).size();
             }
+            status = "succeeded";
             return proceed;
         } finally {
             if (log.isDebugEnabled()) {
                 long sqlCost = System.currentTimeMillis() - startTime;
                 String sql = this.getSql(target);
-                log.info("sql took {}ms for {} line: {}", sqlCost, lines, sql);
+                log.info("sql exec {}, took {}ms ret {} rows: {}", status, sqlCost, lines, sql);
             }
         }
     }
