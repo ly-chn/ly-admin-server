@@ -2,7 +2,6 @@ package kim.nzxy.ly.common.config;
 
 import cn.dev33.satoken.interceptor.SaInterceptor;
 import cn.dev33.satoken.stp.StpUtil;
-import kim.nzxy.ly.common.util.TokenUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.slf4j.MDC;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +14,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @author ly
  * @see <a href="https://sa-token.dev33.cn/">官方文档</a>
  */
-@Configuration
+// @Configuration
 @Slf4j
 public class SaTokenConfig implements WebMvcConfigurer {
     /**

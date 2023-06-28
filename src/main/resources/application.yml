@@ -40,3 +40,5 @@ mybatis-plus:
   global-config:
     db-config:
       logic-delete-field: deleted
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

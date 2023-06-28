@@ -1,2 +1,2 @@
 ### 新增权限
-POST http://localhost:8937/sys-permission/edit
+POST {{host}}/sys-permission/edit

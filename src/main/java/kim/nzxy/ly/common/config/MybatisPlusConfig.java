@@ -1,8 +1,15 @@
 package kim.nzxy.ly.common.config;
 
+import com.baomidou.mybatisplus.autoconfigure.ConfigurationCustomizer;
 import com.baomidou.mybatisplus.core.handlers.MetaObjectHandler;
+import com.baomidou.mybatisplus.core.injector.AbstractMethod;
+import com.baomidou.mybatisplus.core.injector.DefaultSqlInjector;
+import com.baomidou.mybatisplus.core.metadata.TableInfo;
+import com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler;
 import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
 import com.baomidou.mybatisplus.extension.plugins.inner.PaginationInnerInterceptor;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import kim.nzxy.ly.common.config.method.InsertList;
 import kim.nzxy.ly.common.entity.BaseEntity;
 import kim.nzxy.ly.common.entity.BaseFinalEntity;
 import kim.nzxy.ly.common.util.TokenUtil;
@@ -12,6 +19,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * mybatis plus config
@@ -49,5 +57,26 @@ public class MybatisPlusConfig implements MetaObjectHandler {
         paging.setOverflow(true);
         interceptor.addInnerInterceptor(paging);
         return interceptor;
+    }
+
+    @Bean
+    public DefaultSqlInjector sqlInjector() {
+        return new DefaultSqlInjector() {
+            @Override
+            public List<AbstractMethod> getMethodList(Class<?> mapperClass, TableInfo tableInfo) {
+                List<AbstractMethod> methodList = super.getMethodList(mapperClass, tableInfo);
+                // 批量插入
+                methodList.add(new InsertList());
+                return methodList;
+            }
+        };
+    }
+
+    @Bean
+    public ConfigurationCustomizer configurationCustomizer(ObjectMapper objectMapper) {
+        // 覆盖默认om
+        JacksonTypeHandler.setObjectMapper(objectMapper);
+        return configuration -> configuration.getTypeHandlerRegistry()
+                .register(JacksonTypeHandler.class);
     }
 }

@@ -8,12 +8,14 @@ import kim.nzxy.ly.modules.test.entity.TestStudent;
 import kim.nzxy.ly.modules.test.mapper.TestStudentMapper;
 import kim.nzxy.ly.modules.test.query.TestStudentQuery;
 import kim.nzxy.ly.modules.test.service.TestStudentService;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 
 @Service
+@Slf4j
 public class TestStudentServiceImpl extends ServiceImpl<TestStudentMapper, TestStudent> implements TestStudentService {
 
     @Override

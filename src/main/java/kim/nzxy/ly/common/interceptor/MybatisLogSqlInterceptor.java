@@ -1,5 +1,6 @@
 package kim.nzxy.ly.common.interceptor;
 
+import com.baomidou.mybatisplus.core.toolkit.sql.StringEscape;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.reflect.FieldUtils;
@@ -16,27 +17,37 @@ import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.type.TypeHandlerRegistry;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 import java.sql.Statement;
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
  * mybatis sql 日志拦截器, 用于打印SQL
+ * 已知问题: 如有自定义类型转换功能, 需自己调整, 如JSON, enum等
  *
  * @author ly-chn
  */
 @Slf4j
-@Profile("local")
 @Component
 @Intercepts({@Signature(type = StatementHandler.class, method = "query", args = {Statement.class, ResultHandler.class}),
         @Signature(type = StatementHandler.class, method = "update", args = {Statement.class}),
         @Signature(type = StatementHandler.class, method = "batch", args = {Statement.class})})
 public class MybatisLogSqlInterceptor implements Interceptor {
     private static final Set<String> NEED_BRACKETS =
-            Set.of("String", "Date", "Time", "LocalDate", "LocalTime", "LocalDateTime", "BigDecimal", "Timestamp");
+            Set.of("String",
+                    "Date",
+                    "Time",
+                    "LocalDate",
+                    "LocalTime",
+                    "LocalDateTime",
+                    "BigDecimal",
+                    "Timestamp"
+            );
 
     private Configuration configuration = null;
 
@@ -55,11 +66,9 @@ public class MybatisLogSqlInterceptor implements Interceptor {
             status = "succeeded";
             return proceed;
         } finally {
-            if (log.isDebugEnabled()) {
-                long sqlCost = System.currentTimeMillis() - startTime;
-                String sql = this.getSql(target);
-                log.info("sql exec {}, took {}ms ret {} rows: {}", status, sqlCost, lines, sql);
-            }
+            long sqlCost = System.currentTimeMillis() - startTime;
+            String sql = this.getSql(target);
+            log.info("sql exec {} took {}ms ret {} rows: {}", status, sqlCost, lines, sql);
         }
     }
 
@@ -127,10 +136,11 @@ public class MybatisLogSqlInterceptor implements Interceptor {
             }
             if (value != null) {
                 String type = value.getClass().getSimpleName();
+                String escapeValue = StringEscape.escapeString(value.toString());
                 if (NEED_BRACKETS.contains(type)) {
-                    result.replace(i - 1, i, "'" + value + "'");
+                    result.replace(i - 1, i, escapeValue);
                 } else {
-                    result.replace(i - 1, i, value.toString());
+                    result.replace(i - 1, i, escapeValue);
                 }
             } else {
                 result.replace(i - 1, i, "null");

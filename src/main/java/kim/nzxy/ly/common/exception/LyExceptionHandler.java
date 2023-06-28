@@ -92,7 +92,7 @@ public class LyExceptionHandler {
     @ExceptionHandler(PoolException.class)
     public Res<?> handler(PoolException e) {
         log.error(e.getMessage(), e);
-        return Res.fail("Redis 无法连接!");
+        return Res.fail("连接异常, 请稍候重试");
     }
 
     @ExceptionHandler(NotLoginException.class)
@@ -108,6 +108,6 @@ public class LyExceptionHandler {
             default -> "token校验失败";
         };
         // 返回给前端
-        return Res.fail(message);
+        return Res.fail(message, 4001);
     }
 }
