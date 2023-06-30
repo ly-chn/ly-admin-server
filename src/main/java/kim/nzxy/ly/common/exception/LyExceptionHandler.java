@@ -25,8 +25,15 @@ public class LyExceptionHandler {
      */
     @ExceptionHandler(LyException.class)
     public Res<?> handler(LyException e) {
-        log.error(e.getMessage(), e);
+        log.error("自定义异常", e);
         return Res.fail(e.getMessage());
+    }
+    /**
+     * 自定义异常
+     */
+    @ExceptionHandler(LyException.None.class)
+    public void handler(LyException.None e) {
+        log.error("忽略异常", e);
     }
 
     /**

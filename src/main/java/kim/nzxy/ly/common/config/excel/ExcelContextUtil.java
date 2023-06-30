@@ -3,10 +3,13 @@ package kim.nzxy.ly.common.config.excel;
 import jakarta.servlet.http.HttpServletResponse;
 import kim.nzxy.ly.common.exception.LyException;
 import kim.nzxy.ly.common.util.RequestContextUtil;
+import org.apache.poi.openxml4j.opc.internal.ContentType;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 /**
  * excel导入导出过程中用到的工具类
@@ -37,8 +40,9 @@ public class ExcelContextUtil {
         if (!filename.endsWith(SUFFIX)) {
             filename += SUFFIX;
         }
-        response.setHeader("Content-Disposition", "attachment; filename=" + RequestContextUtil.filenameEncoding(filename));
-        response.setContentType("application/vnd.ms-excel");
-        response.setHeader("filename", filename);
+        response.setCharacterEncoding("utf-8");
+        filename = URLEncoder.encode(filename, StandardCharsets.UTF_8).replace("\\+", "%20");
+        response.setHeader("Content-Disposition", "attachment; filename=" + filename);
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
     }
 }

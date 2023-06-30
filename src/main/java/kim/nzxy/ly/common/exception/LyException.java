@@ -52,4 +52,13 @@ public class LyException extends RuntimeException {
             this(message, null);
         }
     }
+
+    /**
+     * 不做处理的异常, 由于一些场景不得不抛出异常, 以避免全局异常处理或全局响应处理来添加额外信息
+     */
+    public static class None extends LyException {
+        public None() {
+            super(null, null);
+        }
+    }
 }
