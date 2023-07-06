@@ -43,14 +43,15 @@ public class TestStudentController {
     }
 
     @PostMapping("import")
-    public void readExcel(MultipartFile file, HttpServletResponse response) throws IOException {
-        ExcelUtil.read(file, TestStudentImportDTO.class);
+    public void readExcel(MultipartFile file) throws IOException {
+        List<TestStudentImportDTO> read = ExcelUtil.read(file, TestStudentImportDTO.class);
+        log.info("已导出: {}", read);
     }
     @GetMapping("test")
     public void test(HttpServletResponse response) throws IOException {
         ExcelContextUtil.setDownloadHeader(response, "文件导入失败.xlsx");
         EasyExcel.write(response.getOutputStream())
-                .withTemplate("C:\\Users\\Liaoliao\\Downloads\\test-import.xlsx")
+                .withTemplate("C:\\Users\\Liaoliao\\Downloads\\template-fail.xlsx")
                 .sheet()
                 .doFill(new ArrayList<>());
     }

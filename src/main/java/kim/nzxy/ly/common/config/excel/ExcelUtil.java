@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -76,14 +77,18 @@ public class ExcelUtil {
         if (resultList.stream().allMatch(it -> it.getViolation().isEmpty())) {
             return resultList.stream().map(ExcelLineResult::getTarget).collect(Collectors.toList());
         }
+        log.error("Excel校验失败, 读取结果: {}", resultList);
         HttpServletResponse response = RequestContextUtil.getResponse();
         try {
             ExcelContextUtil.setDownloadHeader(response, "文件导入失败.xlsx");
-            EasyExcel.write(response.getOutputStream())
-                    .withTemplate(file.getInputStream())
+            EasyExcel.write(response.getOutputStream(), pojoClass)
+                    // file.getInputStream()
+                    .withTemplate("C:\\Users\\Liaoliao\\Downloads\\template-fail.xlsx")
+                    .autoCloseStream(false)
+                    .registerWriteHandler(new ExcelErrorFillHandler<T>(resultList, titleLineNumber))
                     .sheet()
                     .doFill(resultList);
-            throw new LyException.None();
+            return null;
         } catch (IOException e) {
             throw new RuntimeException(e);
         } finally {
