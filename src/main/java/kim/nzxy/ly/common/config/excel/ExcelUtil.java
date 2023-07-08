@@ -70,33 +70,25 @@ public class ExcelUtil {
      */
     public static <T> List<T> read(MultipartFile file, Class<T> pojoClass, Integer titleLineNumber) {
         ExcelImportListener<T> listener = new ExcelImportListener<>(pojoClass);
-        InputStream inputStream = ExcelContextUtil.getInputStream(file);
-        EasyExcel.read(inputStream, pojoClass, listener).sheet().doRead();
-        List<ExcelLineResult<T>> resultList = listener.getExcelLineResultList();
-        // 全部校验通过, 则允许返回
-        if (resultList.stream().allMatch(it -> it.getViolation().isEmpty())) {
-            return resultList.stream().map(ExcelLineResult::getTarget).collect(Collectors.toList());
-        }
-        log.error("Excel校验失败, 读取结果: {}", resultList);
-        HttpServletResponse response = RequestContextUtil.getResponse();
-        try {
+
+        try(InputStream inputStream = file.getInputStream()) {
+            EasyExcel.read(inputStream, pojoClass, listener).sheet().doRead();
+            List<ExcelLineResult<T>> resultList = listener.getExcelLineResultList();
+            // 全部校验通过, 则允许返回
+            if (resultList.stream().allMatch(it -> it.getViolation().isEmpty())) {
+                return resultList.stream().map(ExcelLineResult::getTarget).collect(Collectors.toList());
+            }
+            log.error("Excel校验失败, 读取结果: {}", resultList);
+            HttpServletResponse response = RequestContextUtil.getResponse();
             ExcelContextUtil.setDownloadHeader(response, "文件导入失败.xlsx");
             EasyExcel.write(response.getOutputStream(), pojoClass)
-                    // file.getInputStream()
-                    .withTemplate("C:\\Users\\Liaoliao\\Downloads\\template-fail.xlsx")
-                    .autoCloseStream(false)
+                    .withTemplate(inputStream)
                     .registerWriteHandler(new ExcelErrorFillHandler<T>(resultList, titleLineNumber))
                     .sheet()
                     .doFill(resultList);
-            return null;
+            throw new LyException.None();
         } catch (IOException e) {
-            throw new RuntimeException(e);
-        } finally {
-            try {
-                inputStream.close();
-            } catch (IOException e) {
-                log.error("关闭流失败", e);
-            }
+            throw new LyException.Normal("文件异常");
         }
     }
 }
