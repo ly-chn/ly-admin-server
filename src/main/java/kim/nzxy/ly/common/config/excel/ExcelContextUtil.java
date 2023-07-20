@@ -19,17 +19,6 @@ import java.nio.charset.StandardCharsets;
 public class ExcelContextUtil {
     private static final String SUFFIX = ".xlsx";
 
-    public static InputStream getInputStream(MultipartFile file) {
-        if (file == null) {
-            throw new LyException.Normal("文件不能为空");
-        }
-        try {
-            return file.getInputStream();
-        } catch (IOException e) {
-            throw new LyException.Normal("读取文件失败", e);
-        }
-    }
-
     /**
      * 为下载文件设置响应头
      *
@@ -42,6 +31,8 @@ public class ExcelContextUtil {
         }
         response.setCharacterEncoding("utf-8");
         filename = URLEncoder.encode(filename, StandardCharsets.UTF_8).replace("\\+", "%20");
+        // axios下载时获取文件名
+        response.setHeader("filename",filename);
         response.setHeader("Content-Disposition", "attachment; filename=" + filename);
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
     }

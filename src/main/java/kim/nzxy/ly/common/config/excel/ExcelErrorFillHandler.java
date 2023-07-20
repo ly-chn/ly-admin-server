@@ -8,6 +8,7 @@ import com.alibaba.excel.write.metadata.holder.WriteWorkbookHolder;
 import jakarta.validation.ConstraintViolation;
 import kim.nzxy.ly.common.util.LyValidationUtil;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
 
@@ -19,7 +20,7 @@ import java.util.stream.Collectors;
  * @author xuyingfa
  */
 @Slf4j
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class ExcelErrorFillHandler<T> implements SheetWriteHandler, RowWriteHandler {
     /**
      * 错误结果集
@@ -29,6 +30,8 @@ public class ExcelErrorFillHandler<T> implements SheetWriteHandler, RowWriteHand
      * 标题所在行, 从1开始
      */
     private final Integer titleLineNumber;
+
+    private int errorColNum;
 
 
     private static void setCellStyle(Cell cell) {
@@ -57,11 +60,12 @@ public class ExcelErrorFillHandler<T> implements SheetWriteHandler, RowWriteHand
             Row row = cachedSheet.getRow(i - 1);
             // 标题行, 创建标题
             if (i == titleLineNumber) {
+                this.errorColNum = row.getLastCellNum();
                 row.createCell(row.getLastCellNum(), CellType.STRING).setCellValue("错误信息");
                 continue;
             }
             // 错误行
-            Cell cell = row.createCell(row.getLastCellNum(), CellType.STRING);
+            Cell cell = row.createCell(this.errorColNum, CellType.STRING);
             setCellStyle(cell);
             cell.setCellValue(convertErrMsg(resultList.get(i - titleLineNumber - 1).getViolation()));
         }

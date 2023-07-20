@@ -8,6 +8,9 @@ import lombok.Data;
 
 import java.time.LocalDate;
 
+/**
+ * @author ly.chn
+ */
 @Data
 public class TestStudentImportDTO {
     /**
@@ -16,6 +19,12 @@ public class TestStudentImportDTO {
     @ExcelProperty("学号")
     @NotEmpty(message = "学号不能为空")
     private String stuNum;
+    /**
+     * 学号
+     */
+    @ExcelProperty("学生姓名")
+    @NotEmpty(message = "学生姓名不能为空")
+    private String stuName;
 
     /**
      * 性别, 字典: sex
@@ -35,5 +44,6 @@ public class TestStudentImportDTO {
      * 受表扬次数
      */
     @ExcelProperty("受表扬次数")
+    @NotNull(message = "受表扬次数, 如果为空, 请填写0")
     private Integer starCount;
 }

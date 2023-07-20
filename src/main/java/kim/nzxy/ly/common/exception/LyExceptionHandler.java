@@ -33,7 +33,7 @@ public class LyExceptionHandler {
      */
     @ExceptionHandler(LyException.None.class)
     public void handler(LyException.None e) {
-        log.error("忽略异常", e);
+        // log.error("忽略异常", e);
     }
 
     /**

@@ -15,7 +15,6 @@ import java.util.List;
 @AllArgsConstructor
 class ExcelImportListener<T> implements ReadListener<T> {
     private final List<ExcelLineResult<T>> excelLineResultList = new ArrayList<>();
-    private final Class<T> pojoClass;
 
     @Override
     public void invoke(T t, AnalysisContext analysisContext) {

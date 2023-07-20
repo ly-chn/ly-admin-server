@@ -28,13 +28,14 @@ dependencies {
     implementation 'de.mkammerer:argon2-jvm:2.11'
     implementation 'com.baomidou:mybatis-plus-boot-starter:3.5.3.1'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-    implementation 'com.alibaba:easyexcel:3.2.1'
+    implementation 'com.alibaba:easyexcel:3.3.2'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'mysql:mysql-connector-java'
     annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'commons-io:commons-io:2.11.0'
+    implementation 'com.apifan.common:common-random:1.0.21'
 }
 
 tasks.named('test') {

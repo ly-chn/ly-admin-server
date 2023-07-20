@@ -2,19 +2,16 @@ package kim.nzxy.ly.common.config.excel;
 
 
 import com.alibaba.excel.EasyExcel;
-import com.alibaba.excel.ExcelWriter;
-import com.alibaba.excel.write.builder.ExcelWriterBuilder;
-import com.alibaba.excel.write.metadata.fill.FillConfig;
+import com.baomidou.mybatisplus.core.toolkit.support.SFunction;
 import jakarta.servlet.http.HttpServletResponse;
 import kim.nzxy.ly.common.exception.LyException;
 import kim.nzxy.ly.common.util.RequestContextUtil;
+import lombok.Cleanup;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -61,6 +58,7 @@ public class ExcelUtil {
 
     /**
      * 导入
+     * todo: 添加consumer
      *
      * @param file            文件
      * @param pojoClass       实体类
@@ -69,9 +67,9 @@ public class ExcelUtil {
      * @return 成功将返回数据, 否则自动拦截并返回内容
      */
     public static <T> List<T> read(MultipartFile file, Class<T> pojoClass, Integer titleLineNumber) {
-        ExcelImportListener<T> listener = new ExcelImportListener<>(pojoClass);
-
-        try(InputStream inputStream = file.getInputStream()) {
+        try {
+            ExcelImportListener<T> listener = new ExcelImportListener<>();
+            @Cleanup InputStream inputStream = file.getInputStream();
             EasyExcel.read(inputStream, pojoClass, listener).sheet().doRead();
             List<ExcelLineResult<T>> resultList = listener.getExcelLineResultList();
             // 全部校验通过, 则允许返回
@@ -81,14 +79,16 @@ public class ExcelUtil {
             log.error("Excel校验失败, 读取结果: {}", resultList);
             HttpServletResponse response = RequestContextUtil.getResponse();
             ExcelContextUtil.setDownloadHeader(response, "文件导入失败.xlsx");
+            InputStream templateIs = file.getInputStream();
             EasyExcel.write(response.getOutputStream(), pojoClass)
-                    .withTemplate(inputStream)
+                    .withTemplate(templateIs)
                     .registerWriteHandler(new ExcelErrorFillHandler<T>(resultList, titleLineNumber))
                     .sheet()
                     .doFill(resultList);
-            throw new LyException.None();
         } catch (IOException e) {
-            throw new LyException.Normal("文件异常");
+            log.error("文件读取失败", e);
+            throw new LyException.Normal("文件读取失败");
         }
+        throw new LyException.None();
     }
 }
