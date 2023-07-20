@@ -28,4 +28,8 @@ class ExcelLineResult<T> {
      * 校验结果
      */
     private Set<ConstraintViolation<T>> violation;
+    /**
+     * 业务异常错误信息
+     */
+    private String bizError;
 }

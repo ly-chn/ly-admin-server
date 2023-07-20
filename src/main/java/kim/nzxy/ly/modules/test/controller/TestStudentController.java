@@ -3,6 +3,7 @@ package kim.nzxy.ly.modules.test.controller;
 import com.apifan.common.random.RandomSource;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import kim.nzxy.ly.common.config.excel.ExcelUtil;
+import kim.nzxy.ly.common.exception.LyException;
 import kim.nzxy.ly.common.res.Res;
 import kim.nzxy.ly.modules.test.dto.TestStudentImportDTO;
 import kim.nzxy.ly.modules.test.entity.TestStudent;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 
@@ -42,9 +42,13 @@ public class TestStudentController {
 
     @PostMapping("import")
     public Res<List<TestStudentImportDTO>> readExcel(MultipartFile file) {
-        List<TestStudentImportDTO> read = ExcelUtil.read(file, TestStudentImportDTO.class);
-        log.info("读取到的数据: {}", read);
-        return Res.ok("成功导入" + read.size() + "条数据");
+        ExcelUtil.read(file, TestStudentImportDTO.class, t -> {
+            // 模拟service中业务异常
+            if (!t.getStuNum().startsWith("No.")) {
+                throw new LyException.Normal("学号必须以\"No.\"开头");
+            }
+        });
+        return Res.ok("已全部导入");
     }
 
     @GetMapping("export")

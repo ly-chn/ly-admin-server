@@ -5,6 +5,7 @@ import com.alibaba.excel.converters.ReadConverterContext;
 import com.alibaba.excel.converters.WriteConverterContext;
 import com.alibaba.excel.enums.CellDataTypeEnum;
 import com.alibaba.excel.metadata.data.WriteCellData;
+import com.alibaba.excel.metadata.property.ExcelContentProperty;
 import kim.nzxy.ly.common.annotation.LyDict;
 import kim.nzxy.ly.common.util.DictUtil;
 import lombok.extern.slf4j.Slf4j;
@@ -33,7 +34,11 @@ public class StringStringExcelConverter implements Converter<String> {
         if (StringUtils.isEmpty(value)) {
             return new WriteCellData<>(value);
         }
-        Field field = context.getContentProperty().getField();
+        ExcelContentProperty contentProperty = context.getContentProperty();
+        if (contentProperty == null) {
+            return new WriteCellData<>(value);
+        }
+        Field field = contentProperty.getField();
         if (!field.isAnnotationPresent(LyDict.class)) {
             return new WriteCellData<>(value);
         }
@@ -46,7 +51,11 @@ public class StringStringExcelConverter implements Converter<String> {
         if (StringUtils.isEmpty(excelValue)) {
             return excelValue;
         }
-        Field field = context.getContentProperty().getField();
+        ExcelContentProperty contentProperty = context.getContentProperty();
+        if (contentProperty == null) {
+            return excelValue;
+        }
+        Field field = contentProperty.getField();
         if (!field.isAnnotationPresent(LyDict.class)) {
             return excelValue;
         }

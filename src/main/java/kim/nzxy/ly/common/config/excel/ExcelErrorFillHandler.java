@@ -5,15 +5,12 @@ import com.alibaba.excel.write.handler.SheetWriteHandler;
 import com.alibaba.excel.write.handler.context.SheetWriteHandlerContext;
 import com.alibaba.excel.write.metadata.holder.WriteSheetHolder;
 import com.alibaba.excel.write.metadata.holder.WriteWorkbookHolder;
-import jakarta.validation.ConstraintViolation;
 import kim.nzxy.ly.common.util.LyValidationUtil;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.ss.usermodel.*;
 
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -31,15 +28,22 @@ public class ExcelErrorFillHandler<T> implements SheetWriteHandler, RowWriteHand
      */
     private final Integer titleLineNumber;
 
-    private int errorColNum;
+    /**
+     * 结果列序号
+     */
+    private int resultColNum;
+
+    /**
+     * 默认导入成功的提示
+     */
+    private static final String SUCCESS_MSG = "导入成功";
 
 
-    private static void setCellStyle(Cell cell) {
+    private static void setCellStyle(Cell cell, IndexedColors color) {
         Workbook workbook = cell.getSheet().getWorkbook();
-
         CellStyle style = workbook.createCellStyle();
         Font font = workbook.createFont();
-        font.setColor(IndexedColors.RED.getIndex());
+        font.setColor(color.getIndex());
         style.setFont(font);
         cell.setCellStyle(style);
     }
@@ -60,23 +64,39 @@ public class ExcelErrorFillHandler<T> implements SheetWriteHandler, RowWriteHand
             Row row = cachedSheet.getRow(i - 1);
             // 标题行, 创建标题
             if (i == titleLineNumber) {
-                this.errorColNum = row.getLastCellNum();
-                row.createCell(row.getLastCellNum(), CellType.STRING).setCellValue("错误信息");
+                this.resultColNum = row.getLastCellNum();
+                Cell cell = row.createCell(row.getLastCellNum(), CellType.STRING);
+                setCellStyle(cell, IndexedColors.BLACK);
+                cell.setCellValue("导入结果");
                 continue;
             }
-            // 错误行
-            Cell cell = row.createCell(this.errorColNum, CellType.STRING);
-            setCellStyle(cell);
-            cell.setCellValue(convertErrMsg(resultList.get(i - titleLineNumber - 1).getViolation()));
+            // 结果行
+            Cell cell = row.createCell(this.resultColNum, CellType.STRING);
+            String errMsg = convertErrMsg(resultList.get(i - titleLineNumber - 1));
+            if (errMsg == null) {
+                setCellStyle(cell, IndexedColors.GREEN);
+                cell.setCellValue(SUCCESS_MSG);
+                continue;
+            }
+            setCellStyle(cell, IndexedColors.RED);
+            cell.setCellValue(errMsg);
         }
     }
 
-    private String convertErrMsg(Set<ConstraintViolation<T>> violation) {
-        // 不存在错误信息, 直接返回null
-        if (violation.isEmpty()) {
+    /**
+     * 解析每行的错误信息
+     *
+     * @param result 读取结果
+     * @return 错误信息
+     */
+    private String convertErrMsg(ExcelLineResult<T> result) {
+        if (result.getBizError() != null) {
+            return result.getBizError();
+        }
+        if (result.getViolation().isEmpty()) {
             return null;
         }
-        return violation.stream().map(LyValidationUtil::getMessage).collect(Collectors.joining(";\n"));
+        return result.getViolation().stream().map(LyValidationUtil::getMessage)
+                .collect(Collectors.joining(";\n"));
     }
-
 }
