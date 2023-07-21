@@ -1,7 +1,7 @@
 package kim.nzxy.ly.common.strategy.jackson;
 
 /**
- * @author Liaoliao
+ * @author ly-chn
  */
 public class LytStrategyFactory {
 }

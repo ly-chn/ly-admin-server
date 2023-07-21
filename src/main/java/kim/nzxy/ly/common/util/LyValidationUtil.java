@@ -8,7 +8,7 @@ import java.lang.reflect.Field;
 import java.util.Objects;
 
 /**
- * @author xuyingfa
+ * @author ly-chn
  */
 public class LyValidationUtil {
     public static String getMessage(ConstraintViolation<?> constraintViolation) {

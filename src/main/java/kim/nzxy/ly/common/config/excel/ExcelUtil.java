@@ -21,8 +21,7 @@ import java.util.function.Consumer;
 /**
  * excel工具
  *
- * @author xuyf
- * @since 2022/10/21 19:07
+ * @author ly-chn
  */
 @Slf4j
 public class ExcelUtil {
@@ -91,7 +90,7 @@ public class ExcelUtil {
             }
             log.error("Excel校验失败, 读取结果: {}", resultList);
             HttpServletResponse response = RequestContextUtil.getResponse();
-            InputStream templateIs = file.getInputStream();
+            @Cleanup InputStream templateIs = file.getInputStream();
             ExcelContextUtil.setDownloadHeader(response, "文件导入失败.xlsx");
 
             EasyExcel.write(response.getOutputStream(), pojoClass)

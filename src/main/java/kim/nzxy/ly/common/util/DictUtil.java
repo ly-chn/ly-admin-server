@@ -6,7 +6,7 @@ import lombok.extern.slf4j.Slf4j;
  * 字典工具类
  * todo 实现静态方法字典转换
  *
- * @author xuyingfa
+ * @author ly-chn
  */
 @Slf4j
 public class DictUtil {

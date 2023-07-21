@@ -4,7 +4,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * @author ly
+ * @author ly-chn
  */
 @SpringBootApplication
 public class LyAdminServerApplication {

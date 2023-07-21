@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 /**
  * sa-token
  *
- * @author ly
+ * @author ly-chn
  * @see <a href="https://sa-token.dev33.cn/">官方文档</a>
  */
 // @Configuration

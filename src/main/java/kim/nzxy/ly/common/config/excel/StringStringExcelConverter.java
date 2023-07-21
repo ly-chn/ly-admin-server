@@ -14,7 +14,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.lang.reflect.Field;
 
 /**
- * @author xuyingfa
+ * @author ly-chn
  */
 @Slf4j
 public class StringStringExcelConverter implements Converter<String> {
