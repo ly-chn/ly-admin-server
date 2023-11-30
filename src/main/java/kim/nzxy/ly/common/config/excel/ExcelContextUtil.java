@@ -26,7 +26,7 @@ public class ExcelContextUtil {
         response.setCharacterEncoding("utf-8");
         filename = URLEncoder.encode(filename, StandardCharsets.UTF_8).replace("\\+", "%20");
         // axios下载时获取文件名
-        response.setHeader("filename",filename);
+        response.setHeader("filename", filename);
         response.setHeader("Content-Disposition", "attachment; filename=" + filename);
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
     }

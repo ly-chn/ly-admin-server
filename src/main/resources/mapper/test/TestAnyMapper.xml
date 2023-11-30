@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kim.nzxy.ly.modules.test.mapper.TestAnyMapper">
+    <resultMap id="BaseResultMap" type="kim.nzxy.ly.modules.test.entity.TestAny">
+        <!--@Table test_any-->
+        <id column="id" property="id"/>
+        <result column="test_varchar" property="testVarchar"/>
+        <result column="test_json" property="testJson"
+                typeHandler="com.baomidou.mybatisplus.extension.handlers.JacksonTypeHandler"/>
+        <result column="test_bit" property="testBit"/>
+        <result column="test_blob" property="testBlob"/>
+        <result column="test_datetime" property="testDatetime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+            id,
+            test_varchar,
+            test_json,
+            test_bit,
+            test_blob,
+            test_datetime
+    </sql>
+</mapper>

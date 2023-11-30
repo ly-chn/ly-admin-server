@@ -35,7 +35,7 @@ public class InsertList extends AbstractMethod {
         KeyGenerator keyGenerator = NoKeyGenerator.INSTANCE;
         SqlMethod sqlMethod = SqlMethod.INSERT_ONE;
         List<TableFieldInfo> fieldList = tableInfo.getFieldList();
-        String insertSqlColumn = tableInfo.getKeyInsertSqlColumn(true, false) +
+        String insertSqlColumn = tableInfo.getKeyInsertSqlColumn(true, null, false) +
                 this.filterTableFieldInfo(fieldList, null, TableFieldInfo::getInsertSqlColumn, "");
         String columnScript = "(" + insertSqlColumn.substring(0, insertSqlColumn.length() - 1) + ")";
         String insertSqlProperty = tableInfo.getKeyInsertSqlProperty(true, "et.", false) + this.filterTableFieldInfo(fieldList, PREDICATE, (i) -> {

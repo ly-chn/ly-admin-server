@@ -13,6 +13,7 @@ import kim.nzxy.ly.common.config.method.InsertList;
 import kim.nzxy.ly.common.entity.BaseEntity;
 import kim.nzxy.ly.common.entity.BaseFinalEntity;
 import kim.nzxy.ly.common.util.TokenUtil;
+import kim.nzxy.ly.modules.system.entity.User;
 import org.apache.ibatis.reflection.MetaObject;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.context.annotation.Bean;

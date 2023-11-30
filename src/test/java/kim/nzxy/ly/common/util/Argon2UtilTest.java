@@ -13,7 +13,7 @@ class Argon2UtilTest {
 
     @Test
     void hash() {
-        System.out.println("hash = " + Argon2Util.hash("ly"));
+        System.out.println("hash = " + Argon2Util.hash("123456"));
     }
 
     @Test
