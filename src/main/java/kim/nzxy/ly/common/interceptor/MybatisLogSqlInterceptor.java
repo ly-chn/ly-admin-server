@@ -51,8 +51,8 @@ public class MybatisLogSqlInterceptor implements Interceptor {
                 sql = sql.substring(sql.indexOf(':'));
                 long cost = System.currentTimeMillis() - startTime;
                 log.info("sql exec {} took {}ms rest {}rows: {}", status, cost, lines, sql);
-            } catch (Exception ignored) {
-                log.error("发生了什么? ", ignored);
+            } catch (Exception e) {
+                log.error("解析sql异常", e);
             }
         }
     }
