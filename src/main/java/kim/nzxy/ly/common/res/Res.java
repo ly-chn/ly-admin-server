@@ -105,6 +105,11 @@ public class Res<T> {
         return Res.fail(message, 5000);
     }
 
+    /**
+     * 常规分页响应
+     * @param page 分页数据
+     * @param <T> 页面数据
+     */
     public static <T> Res<PagingVO<T>> ok(Page<T> page) {
         PagingVO<T> data = new PagingVO<>();
         data.setPages(Math.toIntExact(page.getPages()));

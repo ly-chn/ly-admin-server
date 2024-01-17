@@ -21,7 +21,10 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
+import java.time.chrono.IsoChronology;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.ResolverStyle;
 import java.util.Date;
 
 /**
@@ -32,12 +35,24 @@ import java.util.Date;
 @Configuration
 public class JacksonConfig {
     @Bean
-    public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
+        public Jackson2ObjectMapperBuilderCustomizer jackson2ObjectMapperBuilderCustomizer() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
+        DateTimeFormatter localDateTimeFormat = new DateTimeFormatterBuilder()
+                .parseCaseInsensitive()
+                .append(DateTimeFormatter.ISO_LOCAL_DATE)
+                .optionalStart()
+                .appendLiteral('T')
+                .optionalEnd()
+                .optionalStart()
+                .appendLiteral(' ')
+                .optionalEnd()
+                .append(DateTimeFormatter.ISO_LOCAL_TIME)
+                .toFormatter();
 
         return builder -> {
             builder.serializerByType(LocalDateTime.class, new LocalDateTimeSerializer(dtf))
-                    .deserializerByType(LocalDateTime.class, new LocalDateTimeDeserializer(dtf))
+                    .deserializerByType(LocalDateTime.class, new LocalDateTimeDeserializer(localDateTimeFormat))
                     .serializerByType(LocalTime.class, new LocalTimeSerializer(DateTimeFormatter.ISO_LOCAL_TIME))
                     .deserializerByType(LocalTime.class, new LocalTimeDeserializer(DateTimeFormatter.ISO_LOCAL_TIME))
                     .serializerByType(LocalDate.class, new LocalDateSerializer(DateTimeFormatter.ISO_LOCAL_DATE))

@@ -50,10 +50,42 @@ public class MybatisLogSqlInterceptor implements Interceptor {
                 String sql = statement.toString();
                 sql = sql.substring(sql.indexOf(':'));
                 long cost = System.currentTimeMillis() - startTime;
-                log.info("sql exec {} took {}ms rest {}rows: {}", status, cost, lines, sql);
+                log.info("sql exec {} took {}ms rest {}rows: {}", status, cost, lines, compressSql(sql));
             } catch (Exception e) {
                 log.error("解析sql异常", e);
             }
         }
+    }
+
+    private static String compressSql(String sql) {
+        StringBuilder sb = new StringBuilder();
+        boolean inString = false;
+        boolean hasEscape = false;
+        boolean hasAppendBlank = false;
+        for (int i = 0; i < sql.length(); i++) {
+            char c = sql.charAt(i);
+            if (c == '\'' && !hasEscape) {
+                inString = !inString;
+            }
+            hasEscape = c == '\\' && !hasEscape;
+            if (inString) {
+                if (c == '\n') {
+                    sb.append("\\n");
+                } else {
+                    sb.append(c);
+                }
+                continue;
+            }
+            if (Character.isWhitespace(c)) {
+                if (!hasAppendBlank) {
+                    sb.append(' ');
+                    hasAppendBlank = true;
+                }
+            } else {
+                sb.append(c);
+                hasAppendBlank = false;
+            }
+        }
+        return sb.toString().trim();
     }
 }
