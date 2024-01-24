@@ -1,5 +1,6 @@
 package kim.nzxy.ly.modules.test.controller;
 
+import kim.nzxy.ly.common.res.Res;
 import kim.nzxy.ly.modules.test.entity.TestJson;
 import kim.nzxy.ly.modules.test.service.TestJsonService;
 import lombok.RequiredArgsConstructor;

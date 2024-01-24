@@ -1,4 +1,4 @@
-package kim.nzxy.ly.common.config;
+package kim.nzxy.ly.common.config.mvc;
 
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 

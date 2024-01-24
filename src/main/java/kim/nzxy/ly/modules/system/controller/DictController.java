@@ -29,21 +29,19 @@ public class DictController {
 
     @GetMapping("all")
     @Operation(summary = "列表查询")
-    public Res<List<Dict>> all() {
-        return Res.ok(service.all());
+    public List<Dict> all() {
+        return service.all();
     }
 
     @PostMapping("edit")
     @Operation(summary = "编辑")
-    public Res<Object> edit(@RequestBody DictEditDTO record) {
+    public void edit(@RequestBody DictEditDTO record) {
         service.edit(record);
-        return Res.ok();
     }
 
     @DeleteMapping("remove/{id}")
     @Operation(summary = "移除")
-    public Res<Object> delete(@PathVariable Long id) {
+    public void delete(@PathVariable Long id) {
         service.delete(id);
-        return Res.ok();
     }
 }

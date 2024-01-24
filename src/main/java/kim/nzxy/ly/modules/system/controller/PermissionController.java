@@ -22,20 +22,18 @@ public class PermissionController {
     private final PermissionService service;
 
     @GetMapping("all")
-    public Res<List<Permission>> all() {
-        return Res.ok(service.all());
+    public List<Permission> all() {
+        return service.all();
     }
 
     @PostMapping("edit")
     @Operation(summary = "编辑")
-    public Res<Object> edit(@RequestBody PermissionEditDTO record) {
+    public void edit(@RequestBody PermissionEditDTO record) {
         service.edit(record);
-        return Res.ok();
     }
 
     @DeleteMapping("remove/{id}")
-    public Res<Object> delete(@PathVariable Long id) {
+    public void delete(@PathVariable Long id) {
         service.delete(id);
-        return Res.ok();
     }
 }

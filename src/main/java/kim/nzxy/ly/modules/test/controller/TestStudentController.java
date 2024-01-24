@@ -41,14 +41,13 @@ public class TestStudentController {
     }
 
     @PostMapping("import")
-    public Res<List<TestStudentImportDTO>> readExcel(MultipartFile file) {
+    public void readExcel(MultipartFile file) {
         ExcelUtil.read(file, TestStudentImportDTO.class, t -> {
             // 模拟service中业务异常
             if (!t.getStuNum().startsWith("No.")) {
                 throw new LyException.Normal("学号必须以\"No.\"开头");
             }
         });
-        return Res.ok("已全部导入");
     }
 
     @GetMapping("export")

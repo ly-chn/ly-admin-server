@@ -24,7 +24,7 @@ public class FileRecordController {
     private final FileRecordService service;
 
     @PostMapping
-    public Res<FileRecord> upload(MultipartFile file, Boolean block) {
-        return Res.ok(service.upload(file, block));
+    public FileRecord upload(MultipartFile file, Boolean block) {
+        return service.upload(file, block);
     }
 }

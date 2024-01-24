@@ -30,13 +30,12 @@ public class AccountController {
     }
 
     @PostMapping("login")
-    public Res<SaTokenInfo> login(@RequestBody UserLoginDTO loginInfo) {
-        return Res.ok(service.login(loginInfo));
+    public SaTokenInfo login(@RequestBody UserLoginDTO loginInfo) {
+        return service.login(loginInfo);
     }
 
     @DeleteMapping("logout")
-    public Res<?> logout() {
+    public void logout() {
         TokenUtil.logout();
-        return Res.ok();
     }
 }
