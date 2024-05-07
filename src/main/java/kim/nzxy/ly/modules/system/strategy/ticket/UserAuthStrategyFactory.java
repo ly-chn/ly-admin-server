@@ -1,6 +1,8 @@
 package kim.nzxy.ly.modules.system.strategy.ticket;
 
 import kim.nzxy.ly.modules.system.enums.UserAuthTypeEnum;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 
 import java.util.HashMap;
 
@@ -9,6 +11,7 @@ import java.util.HashMap;
  *
  * @author ly-chn
  */
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserAuthStrategyFactory {
     private static final HashMap<UserAuthTypeEnum, UserAuthHandler> STRATEGY = new HashMap<>();
 

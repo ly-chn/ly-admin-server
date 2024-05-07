@@ -20,9 +20,13 @@ public enum LytEnum {
     /**
      * 可翻译的字段类型, 用于字段类型检测
      */
-    public final Class<?> inType;
+    private final Class<?> inType;
     /**
      * 输出的字段类型, 用于明确字段类型
      */
-    public final Class<?> outType;
+    private final Class<?> outType;
+    /**
+     * 新增字段时的默认字段名
+     */
+    private final String defaultFieldName = "nickname";
 }
